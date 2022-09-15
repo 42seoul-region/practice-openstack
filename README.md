@@ -1,10 +1,10 @@
 # 42Region Practice - OpenStack
 
 ## 1. Docker 실행 방법
-- 저장소를 submodule과 함께 클론합니다.
+- 저장소를 클론합니다.
 - `docker compose up --build` 또는 `docker-compose up --build` 로 서비스를 실행합니다.
 ```bash
-$ git clone --recursive https://github.com/42seoul-region/practice-openstack.git
+$ git clone https://github.com/42seoul-region/practice-openstack.git
 $ docker compose up --build
 ```
 
