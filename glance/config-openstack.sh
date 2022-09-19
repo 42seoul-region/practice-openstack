@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Set Openstack Credential
 export OS_IDENTITY_API_VERSION=3
 export OS_PROJECT_DOMAIN_ID=default
@@ -10,6 +12,7 @@ export OS_PROJECT_NAME=${OPENSTACK_ADMIN_PROJECT}
 export OS_USERNAME=${KEYSTONE_ADMIN_USER}
 export OS_PASSWORD=${KEYSTONE_ADMIN_PASS}
 export OS_AUTH_URL=${KEYSTONE_INTERNAL_ENDPOINT}/v3
+export OS_INTERFACE=internal
 
 # Setting up - Service Project
 echo "Create Service Project"

@@ -30,8 +30,8 @@ services:
       - "5000:5000"
     links:
       - mariadb
-    volumes:
-      - ./log/keystone:/var/log/keystone
+    # volumes:
+    #   - ./log/keystone:/var/log/keystone
     depends_on:
       mariadb:
         condition: service_healthy
@@ -45,10 +45,10 @@ services:
       - "9292:9292"
     links:
       - mariadb
-      - "keystone:keystone-server"
+      - "keystone:$HOST_KEYSTONE"
     volumes:
       - ./data/glance/images:/var/lib/glance/images
-      - ./log/glance:/var/log/glance
+      # - ./log/glance:/var/log/glance
     depends_on:
       mariadb:
         condition: service_healthy

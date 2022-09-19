@@ -14,11 +14,11 @@ configure() {
   echo "configure glance-registry.conf..."
   ./config-glance-registry.py
 
-  su -s /bin/sh -c "glance-manage db_sync" ${GLANCE_DATABASE_SCHEME}
-
   echo "configure openstack..."
   ./config-openstack.sh
 
+  su -s /bin/sh -c "glance-manage db_sync" ${GLANCE_DATABASE_SCHEME}
+  
   echo "done!"
   touch /root/.glance_configured
 }
