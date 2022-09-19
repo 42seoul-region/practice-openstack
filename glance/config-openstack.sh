@@ -9,7 +9,7 @@ export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=${OPENSTACK_ADMIN_PROJECT}
 export OS_USERNAME=${KEYSTONE_ADMIN_USER}
 export OS_PASSWORD=${KEYSTONE_ADMIN_PASS}
-export OS_AUTH_URL=${KEYSTONE_HTTP_SCHEME}://keystone-server:${KEYSTONE_PORT}/v3
+export OS_AUTH_URL=${KEYSTONE_INTERNAL_ENDPOINT}/v3
 
 # Setting up - Service Project
 echo "Create Service Project"
@@ -26,8 +26,8 @@ echo "Create Glance Service"
 openstack service create --name glance --description "OpenStack Image Service" image
 
 echo "Create Glance Endpoint Public"
-openstack endpoint create --region ${REGION_ID} image public  ${GLANCE_HTTP_SCHEME}://${GLANCE_HOST}:${GLANCE_PORT}
+openstack endpoint create --region ${REGION_ID} image public ${GLANCE_PUBLIC_ENDPOINT}
 echo "Create Glance Endpoint Internal"
-openstack endpoint create --region ${REGION_ID} image internal ${GLANCE_HTTP_SCHEME}://${GLANCE_HOST}:${GLANCE_PORT}
+openstack endpoint create --region ${REGION_ID} image internal ${GLANCE_INTERNAL_ENDPOINT}
 echo "Create Glance Endpoint Admin"
-openstack endpoint create --region ${REGION_ID} image admin ${GLANCE_HTTP_SCHEME}://${GLANCE_HOST}:${GLANCE_PORT}
+openstack endpoint create --region ${REGION_ID} image admin ${GLANCE_ADMIN_ENDPOINT}

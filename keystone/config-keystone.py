@@ -7,6 +7,7 @@ config = configparser.ConfigParser()
 config.read('/etc/keystone/keystone.conf')
 
 config['DEFAULT']['debug'] = os.environ['OPENSTACK_DEBUG']
+config['DEFAULT']['log_dir'] = '/var/log/keystone'
 config['database']['connection'] = 'mysql+pymysql://{KEYSTONE_DATABASE_USER}:{KEYSTONE_DATABASE_PASSWORD}@{KEYSTONE_DATABASE_HOST}:{KEYSTONE_DATABASE_PORT}/{KEYSTONE_DATABASE_SCHEME}'.format(**os.environ)
 config['credential']['provider'] = 'fernet'
 

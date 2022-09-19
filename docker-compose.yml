@@ -27,9 +27,11 @@ services:
     env_file:
       - .env
     ports:
-      - "${KEYSTONE_PORT}:${KEYSTONE_PORT}"
+      - "5000:5000"
     links:
       - mariadb
+    volumes:
+      - ./log/keystone:/var/log/keystone
     depends_on:
       mariadb:
         condition: service_healthy
@@ -40,10 +42,12 @@ services:
     env_file:
       - .env
     ports:
-      - "${GLANCE_PORT}:${GLANCE_PORT}"
+      - "9292:9292"
     links:
       - mariadb
       - "keystone:keystone-server"
+    volumes:
+      - ./log/glance:/var/log/glance
     depends_on:
       mariadb:
         condition: service_healthy

@@ -15,9 +15,9 @@ ENV KEYSTONE_DATABASE_PORT=3306
 ENV KEYSTONE_ADMIN_USER=keystone
 ENV KEYSTONE_ADMIN_PASS=keystone_admin_password
 
-ENV KEYSTONE_HTTP_SCHEME=http
-ENV KEYSTONE_HOST=localhost
-ENV KEYSTONE_PORT=5000
+ENV KEYSTONE_PUBLIC_ENDPOINT=http://keystone-server:5000
+ENV KEYSTONE_ADMIN_ENDPOINT=http://keystone-server:5000
+ENV KEYSTONE_INTERNAL_ENDPOINT=http://keystone-server:5000
 
 ENV REGION_ID=42region
 
@@ -27,7 +27,7 @@ RUN apt update && \
     add-apt-repository -y cloud-archive:yoga && \
     apt install -y keystone=2:21.0.0-0ubuntu1~cloud0 apache2=2.4.41-4ubuntu3.12 python3-pip
 
-EXPOSE ${KEYSTONE_PORT}
+EXPOSE 5000
 
 # Copy configuration files
 WORKDIR /
@@ -35,7 +35,7 @@ COPY . .
 
 # Healthcheck
 HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
-CMD wget --no-verbose --tries=1 --spider ${KEYSTONE_HTTP_SCHEME}://${KEYSTONE_HOST}:${KEYSTONE_PORT}/v3/ || exit 1
+CMD wget --no-verbose --tries=1 --spider http://localhost:5000/v3/ || exit 1
 
 # Run entrypoint
 ENTRYPOINT ["./entrypoint.sh"]

@@ -27,13 +27,13 @@ configure() {
     --bootstrap-project-name ${OPENSTACK_ADMIN_PROJECT} \
     --bootstrap-role-name ${OPENSTACK_ADMIN_ROLE} \
     --bootstrap-service-name keystone \
-    --bootstrap-admin-url ${KEYSTONE_HTTP_SCHEME}://${KEYSTONE_HOST}:${KEYSTONE_PORT}/v3/ \
-    --bootstrap-internal-url ${KEYSTONE_HTTP_SCHEME}://${KEYSTONE_HOST}:${KEYSTONE_PORT}/v3/ \
-    --bootstrap-public-url ${KEYSTONE_HTTP_SCHEME}://${KEYSTONE_HOST}:${KEYSTONE_PORT}/v3/ \
+    --bootstrap-admin-url ${KEYSTONE_ADMIN_ENDPOINT}/v3/ \
+    --bootstrap-internal-url ${KEYSTONE_INTERNAL_ENDPOINT}/v3/ \
+    --bootstrap-public-url ${KEYSTONE_PUBLIC_ENDPOINT}/v3/ \
     --bootstrap-region-id ${REGION_ID}
 
   echo "configure apache2..."
-  echo "ServerName ${KEYSTONE_HOST}" >> /etc/apache2/apache2.conf
+  echo "ServerName keystone-server" >> /etc/apache2/apache2.conf
 
   echo "done!"
   touch /root/.keystone_configured
