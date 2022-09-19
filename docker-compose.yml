@@ -47,6 +47,7 @@ services:
       - mariadb
       - "keystone:keystone-server"
     volumes:
+      - ./data/glance/images:/var/lib/glance/images
       - ./log/glance:/var/log/glance
     depends_on:
       mariadb:
