@@ -33,7 +33,7 @@ configure() {
     --bootstrap-region-id ${REGION_ID}
 
   echo "configure apache2..."
-  echo "ServerName keystone-server" >> /etc/apache2/apache2.conf
+  echo "ServerName $HOST_KEYSTONE" >> /etc/apache2/apache2.conf
 
   echo "done!"
   touch /root/.keystone_configured

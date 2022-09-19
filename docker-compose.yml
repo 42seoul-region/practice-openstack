@@ -54,3 +54,21 @@ services:
         condition: service_healthy
       keystone:
         condition: service_healthy
+  placement-api:
+    build:
+      context: ./placement-api
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8778:8778"
+    links:
+      - mariadb
+      - "keystone:$HOST_KEYSTONE"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      keystone:
+        condition: service_healthy
+      glance:
+        condition: service_healthy

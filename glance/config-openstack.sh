@@ -16,21 +16,22 @@ export OS_INTERFACE=internal
 
 # Setting up - Service Project
 echo "Create Service Project"
-openstack project create --domain default --description "Service Project" service
+openstack project create --or-show --domain default --description "Service Project" ${OPENSTACK_SERVICE_PROJECT}
 
 # Setting up - Glance
 echo "Create Glance User"
+openstack user delete ${GLANCE_USER} || true
 openstack user create --domain default --password ${GLANCE_PASS} ${GLANCE_USER}
 
 echo "Create Glance Role"
 openstack role add --project service --user ${GLANCE_USER} ${OPENSTACK_ADMIN_ROLE}
 
 echo "Create Glance Service"
+openstack service delete image || true
 openstack service create --name glance --description "OpenStack Image Service" image
 
-echo "Create Glance Endpoint Public"
-openstack endpoint create --region ${REGION_ID} image public ${GLANCE_PUBLIC_ENDPOINT}
-echo "Create Glance Endpoint Internal"
-openstack endpoint create --region ${REGION_ID} image internal ${GLANCE_INTERNAL_ENDPOINT}
-echo "Create Glance Endpoint Admin"
+echo "Create Glance Endpoint"
+openstack endpoint show image || \
+openstack endpoint create --region ${REGION_ID} image public ${GLANCE_PUBLIC_ENDPOINT} && \
+openstack endpoint create --region ${REGION_ID} image internal ${GLANCE_INTERNAL_ENDPOINT} && \
 openstack endpoint create --region ${REGION_ID} image admin ${GLANCE_ADMIN_ENDPOINT}
