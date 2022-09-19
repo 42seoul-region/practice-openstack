@@ -33,3 +33,19 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+  glance:
+    build:
+      context: ./glance
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${GLANCE_PORT}:${GLANCE_PORT}"
+    links:
+      - mariadb
+      - "keystone:keystone-server"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      keystone:
+        condition: service_healthy
