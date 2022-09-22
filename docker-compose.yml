@@ -80,6 +80,29 @@ services:
                 condition: service_healthy
             glance:
                 condition: service_healthy
+    nova:
+        build:
+            context: ./nova
+            dockerfile: Dockerfile
+            args:
+                - NOVA_EXTERNAL_HOST
+        env_file:
+            - .env
+        ports:
+            - "8774:8774"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_NOVA
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            keystone:
+                condition: service_healthy
+            glance:
+                condition: service_healthy
+            placement-api:
+                condition: service_healthy
 
 networks:
     os-internal: {}
