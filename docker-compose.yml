@@ -1,74 +1,85 @@
 version: "3.9"
 services:
-  mariadb:
-    build:
-      context: ./database
-      dockerfile: Dockerfile
-    volumes:
-      - ./data/mariadb:/var/lib/mysql
-    env_file:
-      - .env
-    restart: unless-stopped
-    command: --log-warning=1 --max-connections=20000
-  phpmyadmin:
-    image: phpmyadmin:latest
-    ports:
-      - "8000:80"
-    env_file:
-      - .env
-    links:
-      - mariadb
-    depends_on:
-      - mariadb
-  keystone:
-    build:
-      context: ./keystone
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      - "5000:5000"
-    links:
-      - mariadb
-    # volumes:
-    #   - ./log/keystone:/var/log/keystone
-    depends_on:
-      mariadb:
-        condition: service_healthy
-  glance:
-    build:
-      context: ./glance
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      - "9292:9292"
-    links:
-      - mariadb
-      - "keystone:$HOST_KEYSTONE"
-    volumes:
-      - ./data/glance/images:/var/lib/glance/images
-      # - ./log/glance:/var/log/glance
-    depends_on:
-      mariadb:
-        condition: service_healthy
-      keystone:
-        condition: service_healthy
-  placement-api:
-    build:
-      context: ./placement-api
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      - "8778:8778"
-    links:
-      - mariadb
-      - "keystone:$HOST_KEYSTONE"
-    depends_on:
-      mariadb:
-        condition: service_healthy
-      keystone:
-        condition: service_healthy
-      glance:
-        condition: service_healthy
+    mariadb:
+        build:
+            context: ./database
+            dockerfile: Dockerfile
+        volumes:
+            - ./data/mariadb:/var/lib/mysql
+        env_file:
+            - .env
+        networks:
+            os-internal:
+                aliases:
+                    - mariadb
+        restart: unless-stopped
+        command: --log-warning=1 --max-connections=20000
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - "8000:80"
+        env_file:
+            - .env
+        networks:
+            os-internal: {}
+        depends_on:
+            - mariadb
+    keystone:
+        build:
+            context: ./keystone
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "5000:5000"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_KEYSTONE
+        # volumes:
+        #   - ./log/keystone:/var/log/keystone
+        depends_on:
+            mariadb:
+                condition: service_healthy
+    glance:
+        build:
+            context: ./glance
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "9292:9292"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_GLANCE
+        volumes:
+            - ./data/glance/images:/var/lib/glance/images
+            # - ./log/glance:/var/log/glance
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            keystone:
+                condition: service_healthy
+    placement-api:
+        build:
+            context: ./placement-api
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "8778:8778"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_PLACEMENT_API
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            keystone:
+                condition: service_healthy
+            glance:
+                condition: service_healthy
+
+networks:
+    os-internal: {}
