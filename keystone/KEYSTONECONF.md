@@ -1,41 +1,37 @@
 # [DEFAULT]
 
 ## From keystone  
----
-## admin_token = <None>
+### admin_token = `<None>`
 
 * String value
 
- Using this feature is *NOT* recommended. Instead, use the `keystone-manage bootstrap` command. The value of this option is treated as a "shared secret" that can be used to bootstrap Keystone through the API. This "token" does not represent a user (it has no identity), and carries no explicit authorization (it effectively bypasses most authorization checks). If set to `None`, the value is ignored and the `admin_token` middleware is effectively disabled. However, to completely disable `admin_token` in production (highly recommended, as it presents a security risk), remove `AdminTokenAuthMiddleware` (the `admin_token_auth` filter) from your paste application pipelines (for example, in `keystone-paste.ini`). (string value) 
----
-## public_endpoint = <None>
+Using this feature is *NOT* recommended. Instead, use the `keystone-manage bootstrap` command. The value of this option is treated as a "shared secret" that can be used to bootstrap Keystone through the API. This "token" does not represent a user (it has no identity), and carries no explicit authorization (it effectively bypasses most authorization checks). If set to `None`, the value is ignored and the `admin_token` middleware is effectively disabled. However, to completely disable `admin_token` in production (highly recommended, as it presents a security risk), remove `AdminTokenAuthMiddleware` (the `admin_token_auth` filter) from your paste application pipelines (for example, in `keystone-paste.ini`). (string value) 
+### public_endpoint = <None>
 
 * URI value
 
 The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. For example, if keystone receives a request to `http://server:5000/v3/users`, then this will option will be automatically treated as `http://server:5000`. You should only need to set option if either the value of the base URL contains a path that keystone does not automatically infer (`/prefix/v3`), or if the endpoint should be found on a different host. (uri value)
----
-## admin_endpoint = <None>
+### admin_endpoint = <None>
 
 * URI value
 
 The base admin endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. For example, if keystone receives a request to `http://server:35357/v3/users`, then this will option will be automatically treated as `http://server:35357`. You should only need to set option if either the value of the base URL contains a path that keystone does not automatically infer (`/prefix/v3`), or if the endpoint should be found on a different host. (uri value)
----
-## max_project_tree_depth = 5
+### max_project_tree_depth = 5
 
 * Integer value
 
 Maximum depth of the project hierarchy, excluding the project acting as a domain at the top of the hierarchy. WARNING: Setting it to a large value may adversely impact performance. (integer value) 
----
-# Limit the sizes of user & project ID/names. (integer value)
-#max_param_size = 64
+### max_param_size = 64
 
----
+* Integer value
+
+Limit the sizes of user & project ID/names. (integer value)
+
 # Similar to `[DEFAULT] max_param_size`, but provides an exception for token
 # values. With Fernet tokens, this can be set as low as 255. With UUID tokens,
 # this should be set to 32). (integer value)
 #max_token_size = 255
 
----
 # Similar to the `[DEFAULT] member_role_name` option, this represents the
 # default role ID used to associate users with their default projects in the v2
 # API. This will be used as the explicit role where one is not specified by the
