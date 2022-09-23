@@ -23,15 +23,20 @@ echo "Create Glance User"
 openstack user delete ${GLANCE_USER} || true
 openstack user create --domain default --password ${GLANCE_PASS} ${GLANCE_USER}
 
-echo "Create Glance Role"
+echo "Check Glance Role"
+if [ $(openstack role assignment list --names | grep ${GLANCE_USER} | wc -l) -eq 0 ];then
+echo "Create Glance Role..."
 openstack role add --project service --user ${GLANCE_USER} ${OPENSTACK_ADMIN_ROLE}
+fi
 
 echo "Create Glance Service"
 openstack service delete image || true
 openstack service create --name glance --description "OpenStack Image Service" image
 
-echo "Create Glance Endpoint"
-openstack endpoint show image || \
-openstack endpoint create --region ${REGION_ID} image public ${GLANCE_PUBLIC_ENDPOINT} && \
-openstack endpoint create --region ${REGION_ID} image internal ${GLANCE_INTERNAL_ENDPOINT} && \
+echo "Check Glance Endpoint"
+if [ $(openstack endpoint list --service image | grep image | wc -l) -eq 0 ];then
+echo "Create Glance Endpoint..."
+openstack endpoint create --region ${REGION_ID} image public ${GLANCE_PUBLIC_ENDPOINT}
+openstack endpoint create --region ${REGION_ID} image internal ${GLANCE_INTERNAL_ENDPOINT}
 openstack endpoint create --region ${REGION_ID} image admin ${GLANCE_ADMIN_ENDPOINT}
+fi

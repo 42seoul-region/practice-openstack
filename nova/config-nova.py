@@ -13,14 +13,14 @@ config['database']['connection'] = 'mysql+pymysql://{NOVA_DATABASE_USER}:{NOVA_D
 config['DEFAULT']['my_ip'] = os.environ['NOVA_EXTERNAL_HOST']
 
 config['api']['auth_strategy'] = 'keystone'
-config['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}/v3/'.format(**os.environ)
-config['key_manager']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}/v3/'.format(**os.environ)
-config['key_manager']['auth_type'] = 'password'
-config['key_manager']['project_domain_name'] = 'Default'
-config['key_manager']['user_domain_name'] = 'Default'
-config['key_manager']['project_name'] = 'service'
-config['key_manager']['username'] = os.environ['NOVA_USER']
-config['key_manager']['password'] = os.environ['NOVA_PASS']
+config['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}'.format(**os.environ)
+config['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}'.format(**os.environ)
+config['keystone_authtoken']['auth_type'] = 'password'
+config['keystone_authtoken']['project_domain_name'] = 'Default'
+config['keystone_authtoken']['user_domain_name'] = 'Default'
+config['keystone_authtoken']['project_name'] = 'service'
+config['keystone_authtoken']['username'] = os.environ['NOVA_USER']
+config['keystone_authtoken']['password'] = os.environ['NOVA_PASS']
 
 config['neutron']['auth_url'] = '{NEUTRON_INTERNAL_ENDPOINT}'.format(**os.environ)
 config['neutron']['auth_type'] = 'password'
@@ -44,6 +44,7 @@ config['placement']['project_domain_name'] = 'Default'
 config['placement']['project_name'] = 'service'
 config['placement']['user_domain_name'] = 'Default'
 config['placement']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}/v3'.format(**os.environ)
+config['placement']['auth_type'] = 'password'
 config['placement']['username'] = os.environ['PLACEMENT_API_USER']
 config['placement']['password'] = os.environ['PLACEMENT_API_PASS']
 

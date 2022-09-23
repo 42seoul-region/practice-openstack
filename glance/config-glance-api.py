@@ -9,13 +9,13 @@ config.read('/etc/glance/glance-api.conf')
 config['DEFAULT']['debug'] = os.environ['OPENSTACK_DEBUG']
 config['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}/v3/'.format(**os.environ)
 config['database']['connection'] = 'mysql+pymysql://{GLANCE_DATABASE_USER}:{GLANCE_DATABASE_PASSWORD}@{GLANCE_DATABASE_HOST}:{GLANCE_DATABASE_PORT}/{GLANCE_DATABASE_SCHEME}'.format(**os.environ)
-config['key_manager']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}/v3/'.format(**os.environ)
-config['key_manager']['auth_type'] = 'password'
-config['key_manager']['project_domain_name'] = 'Default'
-config['key_manager']['user_domain_name'] = 'Default'
-config['key_manager']['project_name'] = 'service'
-config['key_manager']['username'] = os.environ['GLANCE_USER']
-config['key_manager']['password'] = os.environ['GLANCE_PASS']
+config['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}/v3/'.format(**os.environ)
+config['keystone_authtoken']['auth_type'] = 'password'
+config['keystone_authtoken']['project_domain_name'] = 'Default'
+config['keystone_authtoken']['user_domain_name'] = 'Default'
+config['keystone_authtoken']['project_name'] = 'service'
+config['keystone_authtoken']['username'] = os.environ['GLANCE_USER']
+config['keystone_authtoken']['password'] = os.environ['GLANCE_PASS']
 config['paste_deploy']['flavor'] = 'keystone'
 config['glance_store']['stores'] = 'file,http'
 

@@ -41,6 +41,7 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
+        stop_signal: SIGKILL
     glance:
         build:
             context: ./glance
@@ -61,6 +62,7 @@ services:
                 condition: service_healthy
             keystone:
                 condition: service_healthy
+        stop_signal: SIGKILL
     placement-api:
         build:
             context: ./placement-api
@@ -80,6 +82,7 @@ services:
                 condition: service_healthy
             glance:
                 condition: service_healthy
+        stop_signal: SIGKILL
     nova:
         build:
             context: ./nova
@@ -94,6 +97,7 @@ services:
             os-internal:
                 aliases:
                     - $HOST_NOVA
+                ipv4_address: $NOVA_EXTERNAL_HOST
         depends_on:
             mariadb:
                 condition: service_healthy
@@ -103,6 +107,11 @@ services:
                 condition: service_healthy
             placement-api:
                 condition: service_healthy
+        stop_signal: SIGKILL
 
 networks:
-    os-internal: {}
+    os-internal:
+        ipam:
+            driver: default
+            config:
+                - subnet: 10.0.2.0/24

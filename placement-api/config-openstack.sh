@@ -19,15 +19,20 @@ echo "Create Placement User"
 openstack user delete ${PLACEMENT_API_USER} || true
 openstack user create --domain default --password ${PLACEMENT_API_PASS} ${PLACEMENT_API_USER}
 
-echo "Create Placement Role"
+echo "Check Placement Role"
+if [ $(openstack role assignment list --names | grep ${PLACEMENT_API_USER} | wc -l) -eq 0 ];then
+echo "Create Placement Role..."
 openstack role add --project service --user ${PLACEMENT_API_USER} ${OPENSTACK_ADMIN_ROLE}
+fi
 
 echo "Create Placement Service"
 openstack service delete placement || true
 openstack service create --name placement --description "OpenStack Placement Service" placement
 
-echo "Create Placement Endpoint"
-openstack endpoint show placement || \
-openstack endpoint create --region ${REGION_ID} placement public ${PLACEMENT_API_PUBLIC_ENDPOINT} && \
-openstack endpoint create --region ${REGION_ID} placement internal ${PLACEMENT_API_INTERNAL_ENDPOINT} && \
+echo "Check Placement Endpoint"
+if [ $(openstack endpoint list --service placement | grep placement | wc -l) -eq 0 ];then
+echo "Create Placement Endpoint..."
+openstack endpoint create --region ${REGION_ID} placement public ${PLACEMENT_API_PUBLIC_ENDPOINT}
+openstack endpoint create --region ${REGION_ID} placement internal ${PLACEMENT_API_INTERNAL_ENDPOINT}
 openstack endpoint create --region ${REGION_ID} placement admin ${PLACEMENT_API_ADMIN_ENDPOINT}
+fi

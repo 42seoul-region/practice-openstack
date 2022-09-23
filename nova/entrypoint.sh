@@ -33,4 +33,20 @@ if [ ! -f /root/.nova_configured ]; then
 fi
 
 echo "Starting service..."
+
+nova-api &
+nova-scheduler &
+nova-conductor &
+nova-novncproxy &
+
+trap "service_down; exit" SIGTERM
+
+function service_down() {
+  echo "Terminating services..."
+  killall -SIGTERM nova-api
+  killall -SIGTERM nova-scheduler
+  killall -SIGTERM nova-conductor
+  killall -SIGTERM nova-novncproxy
+}
+
 exec "$@"
