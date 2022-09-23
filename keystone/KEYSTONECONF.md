@@ -1,5 +1,7 @@
 [DEFAULT]
 
+
+
 ## From keystone  
 ### admin_token = `<None>`
 
@@ -126,8 +128,8 @@ Interval, number of seconds, of log rate limiting. (integer value)  Maximum numb
 Log level name used by rate limiting: CRITICAL, ERROR, INFO, WARNING, DEBUG or empty string. Logs with level greater or equal to rate_limit_except_level are not filtered. An empty string means that all levels are filtered. (string value)
 
 ### fatal_deprecations = false Enables or disables fatal status of deprecations. (boolean value) 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### rpc_conn_pool_size = 30
 Size of RPC connection pool. (integer value) 
 Deprecated group/name - [DEFAULT]/rpc_conn_pool_size
@@ -243,8 +245,8 @@ The default exchange under which topics are scoped. May be overridden by an exch
 
 [assignment]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the assignment backend driver (where role assignments are stored) in the `keystone.assignment` namespace. Only a SQL driver is supplied by keystone itself. Unless you are writing proprietary drivers for keystone, you do not need to set this option. (string value)
 
@@ -254,8 +256,8 @@ A list of role names which are prohibited from being an implied role. (list valu
 
 [auth]
 
- #From keystone
- #
+�#From keystone
+�#
 ### methods = external,password,token,oauth1,mapped
 Allowed authentication methods. Note: You should disable the `external` auth method if you are currently using federation. External auth and federation both use the REMOTE_USER variable. Since both the mapped and external plugin are being invoked to validate attributes in the request environment, it can cause conflicts. (list value)
 
@@ -277,8 +279,8 @@ Entry point for the mapped auth plugin module in the `keystone.auth.mapped` name
 
 [cache]
 
- #From oslo.cache
- #
+�#From oslo.cache
+�#
 ### config_prefix = cache.oslo
 Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name. (string value)
 
@@ -318,8 +320,8 @@ Number of seconds that an operation will wait to get a memcache client connectio
 
 [catalog]
 
- #From keystone
- #
+�#From keystone
+�#
 ### template_file = default_catalog.templates
 Absolute path to the file used for the templated catalog backend. This option is only used if the `[catalog] driver` is set to `templated`. (string value)
 
@@ -335,8 +337,8 @@ Toggle for catalog caching. This has no effect unless global caching is enabled.
 
 [cors]
 
- #From oslo.middleware
- #
+�#From oslo.middleware
+�#
 ### allowed_origin = <None>
 Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com (list value)
 
@@ -354,8 +356,8 @@ Indicate which header field names may be used during the actual request. (list v
 
 [cors.subdomain]
 
- #From oslo.middleware
- #
+�#From oslo.middleware
+�#
 ### allowed_origin = <None>
 Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com (list value)
 
@@ -364,7 +366,7 @@ Indicate that the actual request can include user credentials (boolean value)
 ### expose_headers = X-Auth-Token,X-Openstack-Request-Id,X-Subject-Token
 Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers. (list value)
 
-## #
+##�#
 ### allow_headers = X-Auth-Token,X-Openstack-Request-Id,X-Subject-Token,X-Project-Id,X-Project-Name,X-Project-Domain-Id,X-Project-Domain-Name,X-Domain-Id,X-Domain-Name
 ### allow_methods = GET,PUT,POST,DELETE,PATCH
 Indicate which methods can be used during the actual request. (list value)  Indicate which header field names may be used during the actual request. (list value)
@@ -372,8 +374,8 @@ Indicate which methods can be used during the actual request. (list value)  Indi
 
 [credential]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the credential backend driver in the `keystone.credential` namespace. Keystone only provides a `sql` driver, so there's no reason to change this unless you are providing a custom entry point. (string value)
 
@@ -386,8 +388,8 @@ Directory containing Fernet keys used to encrypt and decrypt credentials stored 
 
 [database]
 
- #From oslo.db
- #
+�#From oslo.db
+�#
 ### sqlite_db = oslo.sqlite
 DEPRECATED: The file name to use with SQLite. (string value) Deprecated group/name - [DEFAULT]/sqlite_db This option is deprecated for removal. Its value may be silently ignored in the future. Reason: Should use config option connection or slave_connection to connect the database.
 
@@ -455,8 +457,8 @@ raised. Set to -1 to specify an infinite retry count. (integer value)
 
 [domain_config]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the domain-specific configuration driver in the
 `keystone.resource.domain_config` namespace. Only a `sql` option is provided
@@ -476,8 +478,8 @@ value)
 
 [endpoint_filter]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the endpoint filter driver in the `keystone.endpoint_filter`
 namespace. Only a `sql` option is provided by keystone, so there is no reason
@@ -493,8 +495,8 @@ service catalog. (boolean value)
 
 [endpoint_policy]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the endpoint policy driver in the `keystone.endpoint_policy`
 namespace. Only a `sql` driver is provided by keystone, so there is no reason
@@ -503,8 +505,8 @@ to set this unless you are providing a custom entry point. (string value)
 
 [eventlet_server]
 
- #From keystone
- #
+�#From keystone
+�#
 ### public_bind_host = 0.0.0.0
 DEPRECATED: The IP address of the network interface for the public service to
 listen on. (string value)
@@ -552,8 +554,8 @@ are used for URL substitutions.
 
 [federation]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the federation backend driver in the `keystone.federation`
 namespace. Keystone only provides a `sql` driver, so there is no reason to
@@ -597,8 +599,8 @@ enabled. There is typically no reason to disable this. (boolean value)
 
 [fernet_tokens]
 
- #From keystone
- #
+�#From keystone
+�#
 ### key_repository = /etc/keystone/fernet-keys/
 Directory containing Fernet token keys. This directory must exist before
 using `keystone-manage fernet_setup` for the first time, must be writable by
@@ -634,8 +636,8 @@ Minimum value: 1
 
 [healthcheck]
 
- #From oslo.middleware
- #
+�#From oslo.middleware
+�#
 ### path = /healthcheck
 DEPRECATED: The path to respond to healtcheck requests on. (string value)
 This option is deprecated for removal.
@@ -660,8 +662,8 @@ DisableByFilesPortsHealthcheck plugin. (list value)
 
 [identity]
 
- #From keystone
- #
+�#From keystone
+�#
 ### default_domain_id = default
 This references the domain to use for all Identity API v2 requests (which are
 not aware of domains). A domain with this ID can optionally be created for
@@ -725,8 +727,8 @@ Maximum number of entities that will be returned in an identity collection.
 
 [identity_mapping]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the identity mapping backend driver in the
 `keystone.identity.id_mapping` namespace. Keystone only provides a `sql`
@@ -761,8 +763,8 @@ recommended value. (boolean value)
 
 [kvs]
 
- #From keystone
- #
+�#From keystone
+�#
 ### backends =
 DEPRECATED: Extra `dogpile.cache` backend modules to register with the
 `dogpile.cache` library. It is not necessary to set this value unless you are
@@ -810,8 +812,8 @@ in the P release. Use SQL backends instead.
 
 [ldap]
 
- #From keystone
- #
+�#From keystone
+�#
 ### url = ldap://localhost
 URL(s) for connecting to the LDAP server. Multiple LDAP URLs may be specified
 as a comma separated string. The first URL to successfully bind is used for
@@ -1087,8 +1089,8 @@ Minimum value: 1
 
 [matchmaker_redis]
 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### host = 127.0.0.1
 DEPRECATED: Host to locate redis. (string value)
 This option is deprecated for removal.
@@ -1131,8 +1133,8 @@ Timeout in ms on blocking socket operations. (integer value)
 
 [memcache]
 
- #From keystone
- #
+�#From keystone
+�#
 ### servers = localhost:11211
 DEPRECATED: Comma-separated list of memcached servers in the format of
 `host:port,host:port` that keystone should use for the `memcache` token
@@ -1170,8 +1172,8 @@ connection. This is used by the key value store system. (integer value)
 
 [oauth1]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the OAuth backend driver in the `keystone.oauth1` namespace.
 Typically, there is no reason to set this option unless you are providing a
@@ -1194,8 +1196,8 @@ Minimum value: 0
 
 [oslo_messaging_amqp]
 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### container_name = <None>
 Name for the AMQP container. must be globally unique. Defaults to a generated
 UUID (string value)
@@ -1382,8 +1384,8 @@ Permitted values:
 
 [oslo_messaging_kafka]
 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### kafka_default_host = localhost
 DEPRECATED: Default Kafka broker Host (string value)
 This option is deprecated for removal.
@@ -1427,8 +1429,8 @@ Size of batch for the producer async send (integer value)
 
 [oslo_messaging_notifications]
 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### driver =
 The Drivers(s) to handle sending notifications. Possible values are
 messaging, messagingv2, routing, log, test, noop (multi valued)
@@ -1447,8 +1449,8 @@ Deprecated group/name - [DEFAULT]/notification_topics
 
 [oslo_messaging_rabbit]
 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### amqp_durable_queues = false
 Use durable queues in AMQP. (boolean value)
 Deprecated group/name - [DEFAULT]/amqp_durable_queues
@@ -1712,8 +1714,8 @@ message (floating point value)
 
 [oslo_messaging_zmq]
 
- #From oslo.messaging
- #
+�#From oslo.messaging
+�#
 ### rpc_zmq_bind_address = *
 ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP.
 The "host" option should point or resolve to this address. (string value)
@@ -1871,8 +1873,8 @@ value)
 
 [oslo_middleware]
 
- #From oslo.middleware
- #
+�#From oslo.middleware
+�#
 ### max_request_body_size = 114688
 The maximum body size for each  request, in bytes. (integer value)
 Deprecated group/name - [DEFAULT]/osapi_max_request_body_size
@@ -1892,8 +1894,8 @@ middleware should parse the headers or not. (boolean value)
 
 [oslo_policy]
 
- #From oslo.policy
- #
+�#From oslo.policy
+�#
 ### policy_file = policy.json
 The file that defines policies. (string value)
 Deprecated group/name - [DEFAULT]/policy_file
@@ -1913,8 +1915,8 @@ Deprecated group/name - [DEFAULT]/policy_dirs
 
 [paste_deploy]
 
- #From keystone
- #
+�#From keystone
+�#
 ### config_file = keystone-paste.ini
 Name of (or absolute path to) the Paste Deploy configuration file that
 composes middleware and the keystone application itself into actual WSGI
@@ -1924,8 +1926,8 @@ on the file's format. (string value)
 
 [policy]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the policy backend driver in the `keystone.policy` namespace.
 Supplied drivers are `rules` (which does not support any CRUD operations for
@@ -1939,13 +1941,13 @@ Maximum number of entities that will be returned in a policy collection.
 
 [profiler]
 
- #From osprofiler
- #
+�#From osprofiler
+�#
 ### enabled = false
- #Enables the profiling for all services on this node. Default value is False
+�#Enables the profiling for all services on this node. Default value is False
 (fully disable the profiling feature).
- #Possible values:
- #* True: Enables the feature
+�#Possible values:
+�#* True: Enables the feature
 * False: Disables the feature. The profiling cannot be started via this
 project
 operations. If the profiling is triggered by another project, this project
@@ -1955,10 +1957,10 @@ will be empty.
 Deprecated group/name - [profiler]/profiler_enabled
 
 ### trace_sqlalchemy = false
- #Enables SQL requests profiling in services. Default value is False (SQL
+�#Enables SQL requests profiling in services. Default value is False (SQL
 requests won't be traced).
- #Possible values:
- #* True: Enables SQL requests profiling. Each SQL query will be part of the
+�#Possible values:
+�#* True: Enables SQL requests profiling. Each SQL query will be part of the
 trace and can the be analyzed by how much time was spent for that.
 * False: Disables SQL requests profiling. The spent time is only shown on a
 higher level of operations. Single SQL queries cannot be analyzed this
@@ -1966,13 +1968,13 @@ way.
  (boolean value)
 
 ### hmac_keys = SECRET_KEY
- #Secret key(s) to use for encrypting context data for performance profiling.
+�#Secret key(s) to use for encrypting context data for performance profiling.
 This string value should have the following format:
 <key1>[,<key2>,...<keyn>],
 where each key is some random string. A user who triggers the profiling via
 the REST API has to set one of these keys in the headers of the REST API call
 to include profiling results of this node for this particular project.
- #Both "enabled" flag and "hmac_keys" config options should be set to enable
+�#Both "enabled" flag and "hmac_keys" config options should be set to enable
 profiling. Also, to generate correct profiling information across all
 services
 at least one key needs to be consistent between OpenStack projects. This
@@ -1980,38 +1982,38 @@ ensures it can be used from client side to generate the trace, containing
 information from all possible resources. (string value)
 
 ### connection_string = messaging://
- #Connection string for a notifier backend. Default value is messaging:// which
+�#Connection string for a notifier backend. Default value is messaging:// which
 sets the notifier to oslo_messaging.
- #Examples of possible values:
- #* messaging://: use oslo_messaging driver for sending notifications.
+�#Examples of possible values:
+�#* messaging://: use oslo_messaging driver for sending notifications.
 * mongodb://127.0.0.1:27017 : use mongodb driver for sending notifications.
 * elasticsearch://127.0.0.1:9200 : use elasticsearch driver for sending
 notifications.
  (string value)
 
 ### es_doc_type = notification
- #Document type for notification indexing in elasticsearch.
+�#Document type for notification indexing in elasticsearch.
  (string value)
 
 ### es_scroll_time = 2m
- #This parameter is a time value parameter (for example: es_scroll_time=2m),
+�#This parameter is a time value parameter (for example: es_scroll_time=2m),
 indicating for how long the nodes that participate in the search will
 maintain
 relevant resources in order to continue and support it.
  (string value)
 
 ### es_scroll_size = 10000
- #Elasticsearch splits large requests in batches. This parameter defines
+�#Elasticsearch splits large requests in batches. This parameter defines
 maximum size of each batch (for example: es_scroll_size=10000).
  (integer value)
 
 ### socket_timeout = 0.1
- #Redissentinel provides a timeout option on the connections.
+�#Redissentinel provides a timeout option on the connections.
 This parameter defines that timeout (for example: socket_timeout=0.1).
  (floating point value)
 
 ### sentinel_service_name = mymaster
- #Redissentinel uses a service name to identify a master redis service.
+�#Redissentinel uses a service name to identify a master redis service.
 This parameter defines the name (for example:
 sentinal_service_name=mymaster).
  (string value)
@@ -2019,8 +2021,8 @@ sentinal_service_name=mymaster).
 
 [resource]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the resource driver in the `keystone.resource` namespace.
 Only a `sql` driver is supplied by keystone. Unless you are writing
@@ -2076,8 +2078,8 @@ Allowed values: off, new, strict
 
 [revoke]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the token revocation backend driver in the `keystone.revoke`
 namespace. Keystone only provides a `sql` driver, so there is no reason to
@@ -2101,8 +2103,8 @@ Deprecated group/name - [token]/revocation_cache_time
 
 [role]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = <None>
 Entry point for the role backend driver in the `keystone.role` namespace.
 Keystone only provides a `sql` driver, so there's no reason to change this
@@ -2124,8 +2126,8 @@ deployment. (integer value)
 
 [saml]
 
- #From keystone
- #
+�#From keystone
+�#
 ### assertion_expiration_time = 3600
 Determines the lifetime for any SAML assertions generated by keystone, using
 `NotOnOrAfter` attributes. (integer value)
@@ -2211,8 +2213,8 @@ reason to change this value. (string value)
 
 [security_compliance]
 
- #From keystone
- #
+�#From keystone
+�#
 ### disable_user_account_days_inactive = <None>
 The maximum number of days a user can go without authenticating before being
 considered "inactive" and automatically disabled (locked). This feature is
@@ -2309,8 +2311,8 @@ value)
 
 [shadow_users]
 
- #From keystone
- #
+�#From keystone
+�#
 ### driver = sql
 Entry point for the shadow users backend driver in the
 `keystone.identity.shadow_users` namespace. This driver is used for
@@ -2322,8 +2324,8 @@ reason to change this option unless you are providing a custom entry point.
 
 [signing]
 
- #From keystone
- #
+�#From keystone
+�#
 ### certfile = /etc/keystone/ssl/certs/signing_cert.pem
 Absolute path to the public certificate file to use for signing responses to
 revocation lists requests. Set this together with `[signing] keyfile`. For
@@ -2374,8 +2376,8 @@ issued from a trusted certificate authority instead. (string value)
 
 [token]
 
- #From keystone
- #
+�#From keystone
+�#
 ### bind =
 This is a list of external authentication mechanisms which should add token
 binding metadata to tokens, such as `kerberos` or `x509`. Binding metadata is
@@ -2468,8 +2470,8 @@ Defaults to two days. (integer value)
 
 [tokenless_auth]
 
- #From keystone
- #
+�#From keystone
+�#
 ### trusted_issuer =
 The list of distinguished names which identify trusted issuers of client
 certificates allowed to use X.509 tokenless authorization. If the option is
@@ -2497,8 +2499,8 @@ reason to change this value. (string value)
 
 [trust]
 
- #From keystone
- #
+�#From keystone
+�#
 ### enabled = true
 Delegation and impersonation features using trusts can be optionally
 disabled. (boolean value)
