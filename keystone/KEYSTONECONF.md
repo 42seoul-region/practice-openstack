@@ -6,12 +6,12 @@
 * String value
 
 Using this feature is *NOT* recommended. Instead, use the `keystone-manage bootstrap` command. The value of this option is treated as a "shared secret" that can be used to bootstrap Keystone through the API. This "token" does not represent a user (it has no identity), and carries no explicit authorization (it effectively bypasses most authorization checks). If set to `None`, the value is ignored and the `admin_token` middleware is effectively disabled. However, to completely disable `admin_token` in production (highly recommended, as it presents a security risk), remove `AdminTokenAuthMiddleware` (the `admin_token_auth` filter) from your paste application pipelines (for example, in `keystone-paste.ini`). (string value) 
-### public_endpoint = <None>
+### public_endpoint = `<None>`
 
 * URI value
 
 The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. For example, if keystone receives a request to `http://server:5000/v3/users`, then this will option will be automatically treated as `http://server:5000`. You should only need to set option if either the value of the base URL contains a path that keystone does not automatically infer (`/prefix/v3`), or if the endpoint should be found on a different host. (uri value)
-### admin_endpoint = <None>
+### admin_endpoint = `<None>`
 
 * URI value
 
@@ -43,7 +43,7 @@ This is the role name used in combination with the `[DEFAULT] member_role_id` op
 The value passed as the keyword "rounds" to passlib's encrypt method. This option represents a trade off between security and performance. Higher values lead to slower performance, but higher security. Changing this option will only affect newly created passwords as existing password hashes already have a fixed number of rounds applied, so it is safe to tune this option in a running cluster. For more information, see https://pythonhosted.org/passlib/password_hash_api.html#choosing-the-right-rounds-value (integer value) 
 Minimum value: 1000 Maximum value: 100000
 
-### list_limit = <None>
+### list_limit = `<None>`
 The maximum number of entities that will be returned in a collection. This global limit may be then overridden for a specific driver, by specifying a list_limit in the appropriate section (for example, `[assignment]`). No limit is set by default. In larger deployments, it is recommended that you set this to a reasonable number to prevent operations like listing all users and projects from placing an unnecessary load on the system. (integer value)
 
 ### strict_password_check = false
@@ -55,7 +55,7 @@ DEPRECATED: The HTTP header used to determine the scheme for the original reques
 ### insecure_debug = false
 If set to true, then the server will return information in HTTP responses that may allow an unauthenticated or authenticated user to get more information than normal, such as additional details about why authentication failed. This may be useful for debugging but is insecure. (boolean value)
 
-### default_publisher_id = <None>
+### default_publisher_id = `<None>`
 *(string value)
 Default `publisher_id` for outgoing notifications. If left undefined, Keystone will default to using the server's host name. 
 
@@ -64,7 +64,7 @@ Allowed values: basic, cadf (string value)
 Define the notification format for identity service events. A `basic` notification only has information about the resource being operated on. A `cadf` notification has the same information, as well as information about the initiator of the event. The `cadf` option is entirely backwards compatible with the `basic` option, but is fully CADF-compliant, and is recommended for auditing use cases.
 
 ###  notification_opt_out = identity.authenticate.pending ##### notification_opt_out = identity.authenticate.failed ### notification_opt_out = identity.authenticate.success 
-You can reduce the number of notifications keystone emits by explicitly opting out. Keystone will not emit notifications that match the patterns expressed in this list. Values are expected to be in the form of `identity.<resource_type>.<operation>`. By default, all notifications related to authentication are automatically suppressed. This field can be set multiple times in order to opt-out of multiple notification topics. For example, the following suppresses notifications describing user creation or successful authentication events: notification_opt_out=identity.user.create notification_opt_out=identity.authenticate.success (multi valued) 
+You can reduce the number of notifications keystone emits by explicitly opting out. Keystone will not emit notifications that match the patterns expressed in this list. Values are expected to be in the form of `identity.<resource_type>.`<operation>`. `By default, all notifications related to authentication are automatically suppressed. This field can be set multiple times in order to opt-out of multiple notification topics. For example, the following suppresses notifications describing user creation or successful authentication events: notification_opt_out=identity.user.create notification_opt_out=identity.authenticate.success (multi valued) 
 
 ## From oslo.log
 
@@ -74,16 +74,16 @@ If set to true, the logging level will be set to DEBUG instead of the default IN
 ### verbose = true
 DEPRECATED: If set to false, the logging level will be set to WARNING instead of the default INFO level. (boolean value) This option is deprecated for removal. Its value may be silently ignored in the future.
 
-### log_config_append = <None>
+### log_config_append = `<None>`
 The name of a logging configuration file. This file is appended to any existing logging configuration files. For details about logging configuration files, see the Python logging module documentation. Note that when logging configuration files are used then all logging configuration is set in the configuration file and other logging configuration options are ignored (for example, logging_context_format_string). (string value) Note: This option can be changed without restarting. Deprecated group/name - [DEFAULT]/log_config
 
 ### log_date_format = %Y-%m-%d %H:%M:%S
 Defines the format string for %%(asctime)s in log records. Default: %(default)s . This option is ignored if log_config_append is set. (string value)
 
-### log_file = <None>
+### log_file = `<None>`
 (Optional) Name of log file to send logging output to. If no default is set, logging will go to stderr as defined by use_stderr. This option is ignored if log_config_append is set. (string value) Deprecated group/name - [DEFAULT]/logfile
 
-### log_dir = <None>
+### log_dir = `<None>`
 (Optional) The base directory used for relative log_file  paths. This option is ignored if log_config_append is set. (string value) Deprecated group/name - [DEFAULT]/logdir
 
 ### watch_log_file = false
@@ -149,7 +149,7 @@ MatchMaker driver. (string value)
 Number of ZeroMQ contexts, defaults to 1. (integer value) 
 	Deprecated group/name - [DEFAULT]/rpc_zmq_contexts
 
-### rpc_zmq_topic_backlog = <None>
+### rpc_zmq_topic_backlog = `<None>`
 Maximum number of ingress messages to locally buffer per topic. Default is unlimited. (integer value) Deprecated group/name - [DEFAULT]/rpc_zmq_topic_backlog
 
 ### rpc_zmq_ipc_dir = /var/run/openstack
@@ -232,7 +232,7 @@ List of publisher hosts SubConsumer can subscribe on. This option has higher pri
 ### executor_thread_pool_size = 64
 Size of executor thread pool. (integer value) Deprecated group/name - [DEFAULT]/rpc_thread_pool_size
 
-### transport_url = <None>
+### transport_url = `<None>`
 ### rpc_response_timeout = 60 Seconds to wait for a response from a call. (integer value)  A URL representing the messaging driver to use and its full configuration. (string value)
 
 ### rpc_backend = rabbit
@@ -260,19 +260,19 @@ A list of role names which are prohibited from being an implied role. (list valu
 ### methods = external,password,token,oauth1,mapped
 Allowed authentication methods. Note: You should disable the `external` auth method if you are currently using federation. External auth and federation both use the REMOTE_USER variable. Since both the mapped and external plugin are being invoked to validate attributes in the request environment, it can cause conflicts. (list value)
 
-### password = <None>
+### password = `<None>`
 Entry point for the password auth plugin module in the `keystone.auth.password` namespace. You do not need to set this unless you are overriding keystone's own password authentication plugin. (string value)
 
-### token = <None>
+### token = `<None>`
 Entry point for the token auth plugin module in the `keystone.auth.token` namespace. You do not need to set this unless you are overriding keystone's own token authentication plugin. (string value)
 
-### external = <None>
+### external = `<None>`
 Entry point for the external (`REMOTE_USER`) auth plugin module in the `keystone.auth.external` namespace. Supplied drivers are `DefaultDomain` and `Domain`. The default driver is `DefaultDomain`, which assumes that all users identified by the username specified to keystone in the `REMOTE_USER` variable exist within the context of the default domain. The `Domain` option expects an additional environment variable be presented to keystone, `REMOTE_DOMAIN`, containing the domain name of the `REMOTE_USER` (if `REMOTE_DOMAIN` is not set, then the default domain will be used instead). You do not need to set this unless you are taking advantage of "external authentication", where the application server (such as Apache) is handling authentication instead of keystone. (string value)
 
-### oauth1 = <None>
+### oauth1 = `<None>`
 Entry point for the OAuth 1.0a auth plugin module in the `keystone.auth.oauth1` namespace. You do not need to set this unless you are overriding keystone's own `oauth1` authentication plugin. (string value)
 
-### mapped = <None>
+### mapped = `<None>`
 Entry point for the mapped auth plugin module in the `keystone.auth.mapped` namespace. You do not need to set this unless you are overriding keystone's own `mapped` authentication plugin. (string value)
 
 
@@ -327,7 +327,7 @@ Absolute path to the file used for the templated catalog backend. This option is
 ### driver = sql
 Entry point for the catalog driver in the `keystone.catalog` namespace. Keystone provides a `sql` option (which supports basic CRUD operations through SQL), a `templated` option (which loads the catalog from a templated catalog file on disk), and a `endpoint_filter.sql` option (which supports arbitrary service catalogs per project). (string value)
 
-### list_limit = <None>   
+### list_limit = `<None>`
 Time to cache catalog data (in seconds). This has no effect unless global and catalog caching are both enabled. Catalog data (services, endpoints, etc.) typically does not change frequently, and so a longer duration than the ###   Maximum number of entities that will be returned in a catalog collection. There is typically no reason to set this, as it would be unusual for a deployment to have enough services or endpoints to exceed a reasonable limit. (integer value) 
 
 ### caching = true 
@@ -338,7 +338,7 @@ Toggle for catalog caching. This has no effect unless global caching is enabled.
 
 ## From oslo.middleware
 
-### allowed_origin = <None>
+### allowed_origin = `<None>`
 Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com (list value)
 
 ### expose_headers = X-Auth-Token,X-Openstack-Request-Id,X-Subject-Token
@@ -357,7 +357,7 @@ Indicate which header field names may be used during the actual request. (list v
 
 ## From oslo.middleware
 
-### allowed_origin = <None>
+### allowed_origin = `<None>`
 Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com (list value)
 
 ### allow_credentials = true 
@@ -398,10 +398,10 @@ If True, SQLite uses synchronous mode. (boolean value) Deprecated group/name - [
 ### backend = sqlalchemy
 The back end to use for the database. (string value) Deprecated group/name - [DEFAULT]/db_backend
 
-### connection = <None>
+### connection = `<None>`
 The SQLAlchemy connection string to use to connect to the database. (string value) Deprecated group/name - [DEFAULT]/sql_connection Deprecated group/name - [DATABASE]/sql_connection Deprecated group/name - [sql]/connection
 
-### slave_connection = <None>
+### slave_connection = `<None>`
 The SQLAlchemy connection string to use to connect to the slave database. (string value)
 
 ### mysql_sql_mode = TRADITIONAL
@@ -431,7 +431,7 @@ Verbosity of SQL debugging information: 0=None, 100=Everything. (integer value) 
 ### connection_trace = false
 Add Python stack traces to SQL as comment strings. (boolean value) Deprecated group/name - [DEFAULT]/sql_connection_trace
 
-### pool_timeout = <None>
+### pool_timeout = `<None>`
 If set, use this value for pool_timeout with SQLAlchemy. (integer value) Deprecated group/name - [DATABASE]/sqlalchemy_pool_timeout
 
 ### use_db_reconnect = false
@@ -565,7 +565,7 @@ Prefix to use when filtering environment variable names for federated
 assertions. Matched variables are passed into the federated mapping engine.
 (string value)
 
-### remote_id_attribute = <None>
+### remote_id_attribute = `<None>`
 Value to be used to obtain the entity ID of the Identity Provider from the
 environment. For `mod_shib`, this would be `Shib-Identity-Provider`. For For
 `mod_auth_openidc`, this could be `HTTP_OIDC_ISS`. For `mod_auth_mellon`,
@@ -649,7 +649,7 @@ Show more detailed information as part of the response (boolean value)
 Additional backends that can perform health checks and report that
 information back as part of a request. (list value)
 
-### disable_by_file_path = <None>
+### disable_by_file_path = `<None>`
 Check the presence of a file to determine if an application is running on a
 port. Used by DisableByFileHealthcheck plugin. (string value)
 
@@ -719,7 +719,7 @@ performance. Changing this value does not effect existing passwords. (integer
 value)
 Maximum value: 4096
 
-### list_limit = <None>
+### list_limit = `<None>`
 Maximum number of entities that will be returned in an identity collection.
 (integer value)
 
@@ -818,11 +818,11 @@ URL(s) for connecting to the LDAP server. Multiple LDAP URLs may be specified
 as a comma separated string. The first URL to successfully bind is used for
 the connection. (string value)
 
-### user = <None>
+### user = `<None>`
 The user name of the administrator bind DN to use when querying the LDAP
 server, if your LDAP server requires it. (string value)
 
-### password = <None>
+### password = `<None>`
 The password of the administrator bind DN to use when querying the LDAP
 server, if your LDAP server requires it. (string value)
 
@@ -855,21 +855,21 @@ resolution. A value of `always` dereferences aliases in all cases. (string
 value)
 Allowed values: never, searching, always, finding, default
 
-### debug_level = <None>
+### debug_level = `<None>`
 Sets the LDAP debugging level for LDAP calls. A value of 0 means that
 debugging is not enabled. This value is a bitmask, consult your LDAP
 documentation for possible values. (integer value)
 Minimum value: -1
 
-### chase_referrals = <None>
+### chase_referrals = `<None>`
 Sets keystone's referral chasing behavior across directory partitions. If
 left unset, the system's default behavior will be used. (boolean value)
 
-### user_tree_dn = <None>
+### user_tree_dn = `<None>`
 The search base to use for users. Defaults to the `[ldap] suffix` value.
 (string value)
 
-### user_filter = <None>
+### user_filter = `<None>`
 The LDAP search filter to use for users. (string value)
 
 ### user_objectclass = inetOrgPerson
@@ -928,7 +928,7 @@ userAccountControl`. (string value)
 List of user attributes to ignore on create and update, or whether a specific
 user attribute should be filtered for list or show user. (list value)
 
-### user_default_project_id_attribute = <None>
+### user_default_project_id_attribute = `<None>`
 The LDAP attribute mapped to a user's default_project_id in keystone. This is
 most commonly used when keystone has write access to LDAP. (string value)
 
@@ -938,7 +938,7 @@ enabled or not by checking if they are a member of the group defined by the
 `[ldap] user_enabled_emulation_dn` option. Enabling this option causes
 keystone to ignore the value of `[ldap] user_enabled_invert`. (boolean value)
 
-### user_enabled_emulation_dn = <None>
+### user_enabled_emulation_dn = `<None>`
 DN of the group entry to hold enabled users when using enabled emulation.
 Setting this option has no effect unless `[ldap] user_enabled_emulation` is
 also enabled. (string value)
@@ -956,11 +956,11 @@ additional attributes to users in keystone. The expected format is
 object and `user_attr` is the attribute which should appear in the identity
 API. (list value)
 
-### group_tree_dn = <None>
+### group_tree_dn = `<None>`
 The search base to use for groups. Defaults to the `[ldap] suffix` value.
 (string value)
 
-### group_filter = <None>
+### group_filter = `<None>`
 The LDAP search filter to use for groups. (string value)
 
 ### group_objectclass = groupOfNames
@@ -1006,12 +1006,12 @@ API. (list value)
 If enabled, group queries will use Active Directory specific filters for
 nested groups. (boolean value)
 
-### tls_cacertfile = <None>
+### tls_cacertfile = `<None>`
 An absolute path to a CA certificate file to use when communicating with LDAP
 servers. This option will take precedence over `[ldap] tls_cacertdir`, so
 there is no reason to set both. (string value)
 
-### tls_cacertdir = <None>
+### tls_cacertdir = `<None>`
 An absolute path to a CA certificate directory to use when communicating with
 LDAP servers. There is no reason to set this option if you've also set
 `[ldap] tls_cacertfile`. (string value)
@@ -1199,7 +1199,7 @@ Minimum value: 0
 
 ## From oslo.messaging
 
-### container_name = <None>
+### container_name = `<None>`
 Name for the AMQP container. must be globally unique. Defaults to a generated
 UUID (string value)
 Deprecated group/name - [amqp1]/container_name
@@ -1227,7 +1227,7 @@ Private key PEM file used to sign ssl_cert_file certificate (optional)
 (string value)
 Deprecated group/name - [amqp1]/ssl_key_file
 
-### ssl_key_password = <None>
+### ssl_key_password = `<None>`
 Password for decrypting ssl_key_file (if encrypted) (string value)
 Deprecated group/name - [amqp1]/ssl_key_password
 
@@ -1341,7 +1341,7 @@ Appended to the address prefix when sending to a group of consumers. Used by
 the message bus to identify messages that should be delivered in a round-
 robin fashion across consumers. (string value)
 
-### default_notification_exchange = <None>
+### default_notification_exchange = `<None>`
 Exchange name used in notification addresses.
 Exchange name resolution precedence:
 Target.exchange if set
@@ -1349,7 +1349,7 @@ else default_notification_exchange if set
 else control_exchange if set
 else 'notify' (string value)
 
-### default_rpc_exchange = <None>
+### default_rpc_exchange = `<None>`
 Exchange name used in RPC addresses.
 Exchange name resolution precedence:
 Target.exchange if set
@@ -1437,7 +1437,7 @@ The Drivers(s) to handle sending notifications. Possible values are
 messaging, messagingv2, routing, log, test, noop (multi valued)
 Deprecated group/name - [DEFAULT]/notification_driver
 
-### transport_url = <None>
+### transport_url = `<None>`
 A URL representing the messaging driver to use for notifications. If not set,
 we fall back to the same configuration used for RPC. (string value)
 Deprecated group/name - [DEFAULT]/notification_transport_url
@@ -1484,7 +1484,7 @@ How long to wait before reconnecting in response to an AMQP consumer cancel
 notification. (floating point value)
 Deprecated group/name - [DEFAULT]/kombu_reconnect_delay
 
-### kombu_compression = <None>
+### kombu_compression = `<None>`
 EXPERIMENTAL: Possible values are: gzip, bz2. If not set compression will not
 be used. This option may not be available in future versions. (string value)
 
@@ -1605,19 +1605,19 @@ heartbeat. (integer value)
 Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake (boolean value)
 Deprecated group/name - [DEFAULT]/fake_rabbit
 
-### channel_max = <None>
+### channel_max = `<None>`
 Maximum number of channels to allow (integer value)
 
-### frame_max = <None>
+### frame_max = `<None>`
 The maximum byte size for an AMQP frame (integer value)
 
 ### heartbeat_interval = 3
 How often to send heartbeats for consumer's connections (integer value)
 
-### ssl = <None>
+### ssl = `<None>`
 Enable SSL (boolean value)
 
-### ssl_options = <None>
+### ssl_options = `<None>`
 Arguments passed to ssl.wrap_socket (dict value)
 
 ### socket_timeout = 0.25
@@ -1731,7 +1731,7 @@ Deprecated group/name - [DEFAULT]/rpc_zmq_matchmaker
 Number of ZeroMQ contexts, defaults to 1. (integer value)
 Deprecated group/name - [DEFAULT]/rpc_zmq_contexts
 
-### rpc_zmq_topic_backlog = <None>
+### rpc_zmq_topic_backlog = `<None>`
 Maximum number of ingress messages to locally buffer per topic. Default is
 unlimited. (integer value)
 Deprecated group/name - [DEFAULT]/rpc_zmq_topic_backlog
@@ -1935,7 +1935,7 @@ Supplied drivers are `rules` (which does not support any CRUD operations for
 the v3 policy API) and `sql`. Typically, there is no reason to set this
 option unless you are providing a custom entry point. (string value)
 
-### list_limit = <None>
+### list_limit = `<None>`
 Maximum number of entities that will be returned in a policy collection.
 (integer value)
 
@@ -2035,22 +2035,22 @@ Toggle for resource caching. This has no effect unless global caching is
 enabled. (boolean value)
 Deprecated group/name - [assignment]/caching
 
-### cache_time = <None>
+### cache_time = `<None>`
 Time to cache resource data in seconds. This has no effect unless global
 caching is enabled. (integer value)
 Deprecated group/name - [assignment]/cache_time
 
-### list_limit = <None>
+### list_limit = `<None>`
 Maximum number of entities that will be returned in a resource collection.
 (integer value)
 Deprecated group/name - [assignment]/list_limit
 
-### admin_project_domain_name = <None>
+### admin_project_domain_name = `<None>`
 Name of the domain that owns the `admin_project_name`. If left unset, then
 there is no admin project. `[resource] admin_project_name` must also be set
 to use this option. (string value)
 
-### admin_project_name = <None>
+### admin_project_name = `<None>`
 This is a special project which represents cloud-level administrator
 privileges across services. Tokens scoped to this project will contain a true
 `is_admin_project` attribute to indicate to policy systems that the role
@@ -2106,7 +2106,7 @@ Deprecated group/name - [token]/revocation_cache_time
 
 ## From keystone
 
-### driver = <None>
+### driver = `<None>`
 Entry point for the role backend driver in the `keystone.role` namespace.
 Keystone only provides a `sql` driver, so there's no reason to change this
 unless you are providing a custom entry point. (string value)
@@ -2115,11 +2115,11 @@ unless you are providing a custom entry point. (string value)
 Toggle for role caching. This has no effect unless global caching is enabled.
 In a typical deployment, there is no reason to disable this. (boolean value)
 
-### cache_time = <None>
+### cache_time = `<None>`
 Time to cache role data, in seconds. This has no effect unless both global
 caching and `[role] caching` are enabled. (integer value)
 
-### list_limit = <None>
+### list_limit = `<None>`
 Maximum number of entities that will be returned in a role collection. This
 may be useful to tune if you have a large number of discrete roles in your
 deployment. (integer value)
@@ -2149,14 +2149,14 @@ value cannot contain a comma (`,`). (string value)
 Absolute path to the private key file to use for SAML signing. The value
 cannot contain a comma (`,`). (string value)
 
-### idp_entity_id = <None>
+### idp_entity_id = `<None>`
 This is the unique entity identifier of the identity provider (keystone) to
 use when generating SAML assertions. This value is required to generate
 identity provider metadata and must be a URI (a URL is recommended). For
 example: `https://keystone.example.com/v3/OS-FEDERATION/saml2/idp`. (uri
 value)
 
-### idp_sso_endpoint = <None>
+### idp_sso_endpoint = `<None>`
 This is the single sign-on (SSO) service location of the identity provider
 which accepts HTTP POST requests. A value is required to generate identity
 provider metadata. For example: `https://keystone.example.com/v3/OS-
@@ -2216,7 +2216,7 @@ reason to change this value. (string value)
 
 ## From keystone
 
-### disable_user_account_days_inactive = <None>
+### disable_user_account_days_inactive = `<None>`
 The maximum number of days a user can go without authenticating before being
 considered "inactive" and automatically disabled (locked). This feature is
 disabled by default; set any value to enable it. This feature depends on the
@@ -2226,7 +2226,7 @@ may not match the value of the user's `enabled` column in the user table.
 (integer value)
 Minimum value: 1
 
-### lockout_failure_attempts = <None>
+### lockout_failure_attempts = `<None>`
 The maximum number of times that a user can fail to authenticate before the
 user account is locked for the number of seconds specified by
 `[security_compliance] lockout_duration`. This feature is disabled by
@@ -2245,7 +2245,7 @@ to a non-zero value. This feature depends on the `sql` backend for the
 `[identity] driver`. (integer value)
 Minimum value: 1
 
-### password_expires_days = <None>
+### password_expires_days = `<None>`
 The number of days for which a password will be considered valid before
 requiring it to be changed. This feature is disabled by default. If enabled,
 new password changes will have an expiration date, however existing passwords
@@ -2286,14 +2286,14 @@ the `sql` backend for the `[identity] driver`. Note: If
 option should be less than the `password_expires_days`. (integer value)
 Minimum value: 0
 
-### password_regex = <None>
+### password_regex = `<None>`
 The regular expression used to validate password strength requirements. By
 default, the regular expression will match any password. The following is an
 example of a pattern which requires at least 1 letter, 1 digit, and have a
 minimum length of 7 characters: ^(?=.*\d)(?=.*[a-zA-Z]).{7,}$ This feature
 depends on the `sql` backend for the `[identity] driver`. (string value)
 
-### password_regex_description = <None>
+### password_regex_description = `<None>`
 Describe your password regular expression here in language for humans. If a
 password fails to match the regular expression, the contents of this
 configuration variable will be returned to users to explain why their
@@ -2429,7 +2429,7 @@ backend will not be utilized to persist tokens at all. (string value)
 Toggle for caching token creation and validation data. This has no effect
 unless global caching is enabled. (boolean value)
 
-### cache_time = <None>
+### cache_time = `<None>`
 The number of seconds to cache token creation and validation data. This has
 no effect unless both global and `[token] caching` are enabled. (integer
 value)
