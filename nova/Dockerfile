@@ -1,7 +1,14 @@
 FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NOVA_EXTERNAL_HOST
+
+# Install packages (Apache2, Python3.9.14-1)
+RUN apt update && \
+    apt install -y software-properties-common && \
+    add-apt-repository -y cloud-archive:yoga && \
+    apt install -y apache2=2.4.41-4ubuntu3.12 python3-pip python3-pymysql
+
+ARG NOVA_EXTERNAL_HOST 
 
 ENV OPENSTACK_ADMIN_PROJECT=admin
 ENV OPENSTACK_ADMIN_ROLE=admin
@@ -28,14 +35,10 @@ ENV NOVA_INTERNAL_ENDPOINT=http://nova-server:8774
 
 ENV REGION_ID=42region
 
-RUN apt update && \
-    apt install -y software-properties-common && \
-    add-apt-repository -y cloud-archive:yoga
 RUN apt install -y nova-api=3:25.0.1-0ubuntu1~cloud0 \
                     nova-scheduler=3:25.0.1-0ubuntu1~cloud0 \
                     nova-conductor=3:25.0.1-0ubuntu1~cloud0 \
-                    nova-novncproxy=3:25.0.1-0ubuntu1~cloud0 \
-                    apache2=2.4.41-4ubuntu3.12 python3-pip
+                    nova-novncproxy=3:25.0.1-0ubuntu1~cloud0
 
 # Install pip and OpenStack client
 RUN pip install python-openstackclient

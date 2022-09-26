@@ -2,25 +2,29 @@
 
 set -e
 
-echo "Params"
+echo "PARAMS"
 echo "$@"
+echo
 
 configure() {
-  echo "First configurating keystone"
+  echo "Begin configure keystone"
 
-  echo "configure keystone.conf..."
-  ./config-keystone.py
+  # Edit /etc/keystone/keystone.conf file
+  echo "Edit conf file . . ."
+  ./config.py
 
-  echo "configure keystone db..."
-  su -s /bin/sh -c "keystone-manage db_sync" ${KEYSTONE_DATABASE_SCHEME}
+  # Database sync as user 'keystone'
+  echo "Database synchronize . . ."
+  su -s /bin/sh -c "keystone-manage db_sync" keystone
 
-  echo "configure keystone fernet..."
+  # Fernet is credential provider via encryption key
+  # Set-up fernet and credential
+  echo "Set-up fernet . . ."
   keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
-
-  echo "configure keystone credential..."
   keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
-  echo "configure keystone bootstrap..."
+  # Bootstrap
+  echo "Bootstrap Keystone . . ."
   keystone-manage bootstrap \
     --bootstrap-username ${KEYSTONE_ADMIN_USER} \
     --bootstrap-password ${KEYSTONE_ADMIN_PASS} \
@@ -32,16 +36,21 @@ configure() {
     --bootstrap-public-url ${KEYSTONE_PUBLIC_ENDPOINT}/v3/ \
     --bootstrap-region-id ${REGION_ID}
 
-  echo "configure apache2..."
+  # Set host name of HTTP service
+  echo "Append \'ServerName\' to apache2.conf . . ."
   echo "ServerName $HOST_KEYSTONE" >> /etc/apache2/apache2.conf
 
-  echo "done!"
-  touch /root/.keystone_configured
+  echo "Done ! !"
 }
 
-if [ ! -f /root/.keystone_configured ]; then
+if [ -f /root/.keystone_configured ]; then
+  echo "Configure file detected ! !"
+else
+  echo "Configure file not detected . . ."
   configure
+  touch /root/.keystone_configured
 fi
 
-echo "Starting service..."
+echo
+echo "Starting service . . ."
 exec "$@"

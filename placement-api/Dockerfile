@@ -2,6 +2,12 @@ FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Install packages (Apache2, Python3.9.14-1)
+RUN apt update && \
+    apt install -y software-properties-common && \
+    add-apt-repository -y cloud-archive:yoga && \
+    apt install -y apache2=2.4.41-4ubuntu3.12 python3-pip python3-pymysql
+
 ENV OPENSTACK_ADMIN_PROJECT=admin
 ENV OPENSTACK_ADMIN_ROLE=admin
 ENV OPENSTACK_SERVICE_PROJECT=service
@@ -23,10 +29,7 @@ ENV PLACEMENT_INTERNAL_ENDPOINT=http://placement-api-server:8778
 
 ENV REGION_ID=42region
 
-RUN apt update && \
-    apt install -y software-properties-common && \
-    add-apt-repository -y cloud-archive:yoga
-RUN apt install -y placement-api=1:7.0.0-0ubuntu1~cloud0 apache2=2.4.41-4ubuntu3.12 python3-pip python3-pymysql
+RUN apt install -y placement-api=1:7.0.0-0ubuntu1~cloud0 
 
 # Install pip and OpenStack client
 RUN pip install python-openstackclient
