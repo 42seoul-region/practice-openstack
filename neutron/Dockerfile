@@ -31,16 +31,18 @@ ENV REGION_ID=42region
 RUN apt update && \
     apt install -y software-properties-common && \
     add-apt-repository -y cloud-archive:yoga
-RUN apt install -y nova-api=3:25.0.1-0ubuntu1~cloud0 \
-                    nova-scheduler=3:25.0.1-0ubuntu1~cloud0 \
-                    nova-conductor=3:25.0.1-0ubuntu1~cloud0 \
-                    nova-novncproxy=3:25.0.1-0ubuntu1~cloud0 \
+RUN apt install -y --fix-missing neutron-server=2:20.2.0-0ubuntu1~cloud0 \
+                    neutron-plugin-ml2=2:20.2.0-0ubuntu1~cloud0 \
+                    neutron-linuxbridge-agent=2:20.2.0-0ubuntu1~cloud0 \
+                    neutron-l3-agent=2:20.2.0-0ubuntu1~cloud0 \
+                    neutron-dhcp-agent=2:20.2.0-0ubuntu1~cloud0 \
+                    neutron-metadata-agent=2:20.2.0-0ubuntu1~cloud0 \
                     apache2=2.4.41-4ubuntu3.12 python3-pip
 
 # Install pip and OpenStack client
 RUN pip install python-openstackclient
 
-EXPOSE 8774
+EXPOSE 9696
 
 # Copy configuration files
 WORKDIR /
@@ -48,7 +50,7 @@ COPY . .
 
 # Healthcheck
 HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
-CMD wget -O - http://localhost:8774 >/dev/null 2>/dev/null || exit 1
+CMD wget -O - http://localhost:9696 >/dev/null 2>/dev/null || exit 1
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["apache2ctl", "-D", "FOREGROUND"]

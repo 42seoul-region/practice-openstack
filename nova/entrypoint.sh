@@ -39,14 +39,14 @@ nova-scheduler &
 nova-conductor &
 nova-novncproxy &
 
-trap "service_down; exit" SIGTERM
+trap "service_down; exit" SIGKILL
 
 function service_down() {
   echo "Terminating services..."
-  killall -SIGTERM nova-api
-  killall -SIGTERM nova-scheduler
-  killall -SIGTERM nova-conductor
-  killall -SIGTERM nova-novncproxy
+  killall -SIGKILL nova-api
+  killall -SIGKILL nova-scheduler
+  killall -SIGKILL nova-conductor
+  killall -SIGKILL nova-novncproxy
 }
 
 exec "$@"
