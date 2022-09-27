@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
     mariadb:
         build:
@@ -13,7 +14,10 @@ services:
                 aliases:
                     - mariadb
         restart: unless-stopped
-        command: --log-warning=1 --max-connections=20000
+        # About max-connection:
+        #   By default, all OpenStack components start a set number of workers based on the number of CPUs that a system has. The system calculates the number of workers to start by using the following formula: NUM_CPUs / 2. The system calculates a minimum of 2 workers, and a maximum of 4 workers for each function.
+        command: --log-warning=1 --max-connections=512
+
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
@@ -24,6 +28,7 @@ services:
             os-internal: {}
         depends_on:
             - mariadb
+
     keystone:
         build:
             context: ./keystone
@@ -42,6 +47,7 @@ services:
             mariadb:
                 condition: service_healthy
         stop_signal: SIGKILL
+        
     glance:
         build:
             context: ./glance
@@ -58,11 +64,10 @@ services:
             - ./data/glance/images:/var/lib/glance/images
             # - ./log/glance:/var/log/glance
         depends_on:
-            mariadb:
-                condition: service_healthy
             keystone:
                 condition: service_healthy
         stop_signal: SIGKILL
+
     placement-api:
         build:
             context: ./placement-api
@@ -76,13 +81,10 @@ services:
                 aliases:
                     - $HOST_PLACEMENT_API
         depends_on:
-            mariadb:
-                condition: service_healthy
             keystone:
                 condition: service_healthy
-            glance:
-                condition: service_healthy
         stop_signal: SIGKILL
+
     nova:
         build:
             context: ./nova
@@ -99,13 +101,7 @@ services:
                     - $HOST_NOVA
                 ipv4_address: $NOVA_EXTERNAL_HOST
         depends_on:
-            mariadb:
-                condition: service_healthy
             keystone:
-                condition: service_healthy
-            glance:
-                condition: service_healthy
-            placement-api:
                 condition: service_healthy
         stop_signal: SIGKILL
 

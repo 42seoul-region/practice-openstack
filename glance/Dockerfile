@@ -21,12 +21,10 @@ RUN chmod +x config.py entrypoint.sh
 
 EXPOSE 9292
 
-# # Healthcheck
-# HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
-#     CMD wget -O - http://localhost:9292 >/dev/null
+# Healthcheck
+HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
+    CMD wget -O - http://localhost:9292 >/dev/null
 
 # Run entrypoint
 ENTRYPOINT ["./entrypoint.sh"]
-CMD "glance-api" \
-    "--config-dir" "/etc/glance" \
-    "--debug"
+CMD ["glance-api", "--config-dir", "/etc/glance", "--debug"]
