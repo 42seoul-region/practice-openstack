@@ -22,7 +22,7 @@ config['keystone_authtoken']['project_name'] = 'service'
 config['keystone_authtoken']['username'] = os.environ['NOVA_USER']
 config['keystone_authtoken']['password'] = os.environ['NOVA_PASS']
 
-config['neutron']['auth_url'] = '{NEUTRON_INTERNAL_ENDPOINT}'.format(**os.environ)
+config['neutron']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}'.format(**os.environ)
 config['neutron']['auth_type'] = 'password'
 config['neutron']['project_domain_name'] = 'default'
 config['neutron']['user_domain_name'] = 'default'
@@ -30,6 +30,7 @@ config['neutron']['region_name'] = os.environ['REGION_ID']
 config['neutron']['project_name'] = 'service'
 config['neutron']['username'] = os.environ['NEUTRON_USER']
 config['neutron']['password'] = os.environ['NEUTRON_PASS']
+config['neutron']['metadata_proxy_shared_secret'] = os.environ['METADATA_SECRET']
 
 config['vnc']['enabled'] = 'true'
 config['vnc']['server_listen'] = '$my_ip'
