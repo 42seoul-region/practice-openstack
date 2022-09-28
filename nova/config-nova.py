@@ -9,7 +9,7 @@ config.read('/etc/nova/nova.conf')
 config['api_database']['connection'] = 'mysql+pymysql://{NOVA_DATABASE_USER}:{NOVA_DATABASE_PASSWORD}@{NOVA_DATABASE_HOST}:{NOVA_DATABASE_PORT}/{NOVA_API_DATABASE_SCHEME}'.format(**os.environ)
 config['database']['connection'] = 'mysql+pymysql://{NOVA_DATABASE_USER}:{NOVA_DATABASE_PASSWORD}@{NOVA_DATABASE_HOST}:{NOVA_DATABASE_PORT}/{NOVA_DATABASE_SCHEME}'.format(**os.environ)
 
-# config['DEFAULT']['transport_url'] = 'rabbit://openstack:RABBIT_PASS@controller:5672/'.format(**os.environ)\
+config['DEFAULT']['transport_url'] = 'rabbit://openstack:{RABBIT_PASS}@{HOST_RABBITMQ}:5672/'.format(**os.environ)
 config['DEFAULT']['my_ip'] = os.environ['NOVA_EXTERNAL_HOST']
 
 config['api']['auth_strategy'] = 'keystone'

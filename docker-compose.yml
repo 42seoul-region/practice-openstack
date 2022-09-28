@@ -24,6 +24,26 @@ services:
             os-internal:
                 aliases:
                     - $HOST_MEMCACHED
+    rabbitmq:
+        build:
+            context: ./rabbitmq
+            dockerfile: Dockerfile
+            args:
+                - RABBIT_PASS
+        env_file:
+            - .env
+        ports:
+            - "4369:4369"
+            - "5671:5671"
+            - "5672:5672"
+            - "15691:15691"
+            - "15692:15692"
+            - "25672:25672"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_RABBITMQ
+
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
@@ -51,6 +71,8 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
         stop_signal: SIGKILL
     glance:
         build:
@@ -70,6 +92,8 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
             keystone:
                 condition: service_healthy
         stop_signal: SIGKILL
@@ -87,6 +111,8 @@ services:
                     - $HOST_PLACEMENT_API
         depends_on:
             mariadb:
+                condition: service_healthy
+            rabbitmq:
                 condition: service_healthy
             keystone:
                 condition: service_healthy
@@ -111,6 +137,8 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
             keystone:
                 condition: service_healthy
             glance:
@@ -132,6 +160,8 @@ services:
                     - $HOST_NEUTRON
         depends_on:
             mariadb:
+                condition: service_healthy
+            rabbitmq:
                 condition: service_healthy
             keystone:
                 condition: service_healthy
@@ -156,6 +186,8 @@ services:
                     - $HOST_HORIZON
         depends_on:
             mariadb:
+                condition: service_healthy
+            rabbitmq:
                 condition: service_healthy
             keystone:
                 condition: service_healthy

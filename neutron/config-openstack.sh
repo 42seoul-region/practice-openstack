@@ -29,7 +29,7 @@ fi
 echo "Check Neutron Service..."
 openstack service delete network || true
 echo "Create Neutron Service..."
-openstack service create --name neutron --description "OpenStack Image Service" network
+openstack service create --name neutron --description "OpenStack Network Service" network
 
 echo "Check Neutron Endpoint..."
 if [ $(openstack endpoint list --service network | grep network | wc -l) -eq 0 ];then
