@@ -18,7 +18,7 @@ config['DEFAULT']['notify_nova_on_port_data_changes'] = 'true'
 
 config['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}'.format(**os.environ)
 config['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}'.format(**os.environ)
-#config['keystone_authtoken']['memcached_servers'] = '{MEMCACHED_SERVER_ENDPOINT}'.format(**os.environ)
+config['keystone_authtoken']['memcached_servers'] = '{HOST_MEMCACHED}:11211'.format(**os.environ)
 config['keystone_authtoken']['auth_type'] = 'password'
 config['keystone_authtoken']['project_domain_name'] = 'Default'
 config['keystone_authtoken']['user_domain_name'] = 'Default'

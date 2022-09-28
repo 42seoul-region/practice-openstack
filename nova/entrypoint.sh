@@ -24,6 +24,8 @@ configure() {
 
   su -s /bin/sh -c "nova-manage cell_v2 list_cells" ${NOVA_DATABASE_SCHEME}
 
+  su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+
   echo "done!"
   touch /root/.nova_configured
 }
