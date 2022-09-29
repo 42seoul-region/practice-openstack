@@ -55,4 +55,4 @@ HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
 CMD wget -O - http://localhost:9696 >/dev/null 2>/dev/null || exit 1
 
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["apache2", "-D", "FOREGROUND"]
+CMD ["apache2ctl", "-D", "FOREGROUND"]

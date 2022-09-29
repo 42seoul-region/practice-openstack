@@ -15,8 +15,8 @@ configure() {
   ./config-ml2_conf.py
 
   echo "configure linuxbridge_agent.ini..."
-  PROVIDER_INTERFACE_NAME=$(ip -o -4 route show to default | awk '{print $5}') && \
-    ./config-linuxbridge_agent.py
+  export PROVIDER_INTERFACE_NAME=$(ip -o -4 route show to default | awk '{print $5}')
+  ./config-linuxbridge_agent.py
 
   echo "configure l3_agent.ini..."
   ./config-l3_agent.py
@@ -67,6 +67,7 @@ function service_down() {
   kill -TERM $PID_DHCP
   kill -TERM $PID_METADATA
   kill -TERM $PID_L3
+  apache2ctl -k graceful-stop
 }
 
 exec "$@"
