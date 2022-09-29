@@ -15,7 +15,7 @@ conf_glance_api['database']['connection'] = 'mysql+pymysql://{GLANCE_DATABASE_US
 # [keystone_authtoken]
 conf_glance_api['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}/v3/'.format(**os.environ)
 conf_glance_api['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}/v3/'.format(**os.environ)
-# see also memcached_servers
+conf_glance_api['keystone_authtoken']['memcached_servers'] = '{HOST_MEMCACHED}:11211'.format(**os.environ)
 conf_glance_api['keystone_authtoken']['auth_type'] = 'password'
 conf_glance_api['keystone_authtoken']['project_domain_name'] = 'Default'
 conf_glance_api['keystone_authtoken']['user_domain_name'] = 'Default'

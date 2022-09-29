@@ -2,6 +2,7 @@
 
 import os
 import configparser
+import socket
 
 config = configparser.ConfigParser()
 config.read('/etc/nova/nova.conf')
@@ -9,12 +10,13 @@ config.read('/etc/nova/nova.conf')
 config['api_database']['connection'] = 'mysql+pymysql://{NOVA_DATABASE_USER}:{NOVA_DATABASE_PASSWORD}@{NOVA_DATABASE_HOST}:{NOVA_DATABASE_PORT}/{NOVA_API_DATABASE_SCHEME}'.format(**os.environ)
 config['database']['connection'] = 'mysql+pymysql://{NOVA_DATABASE_USER}:{NOVA_DATABASE_PASSWORD}@{NOVA_DATABASE_HOST}:{NOVA_DATABASE_PORT}/{NOVA_DATABASE_SCHEME}'.format(**os.environ)
 
-# config['DEFAULT']['transport_url'] = 'rabbit://openstack:RABBIT_PASS@controller:5672/'.format(**os.environ)\
-config['DEFAULT']['my_ip'] = os.environ['NOVA_EXTERNAL_HOST']
+config['DEFAULT']['transport_url'] = 'rabbit://openstack:{RABBIT_PASS}@{HOST_RABBITMQ}:5672/'.format(**os.environ)
+config['DEFAULT']['my_ip'] = socket.gethostbyname(os.environ['HOST_NOVA'])
 
 config['api']['auth_strategy'] = 'keystone'
 config['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}'.format(**os.environ)
 config['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}'.format(**os.environ)
+config['keystone_authtoken']['memcached_servers'] = '{HOST_MEMCACHED}:11211'.format(**os.environ)
 config['keystone_authtoken']['auth_type'] = 'password'
 config['keystone_authtoken']['project_domain_name'] = 'Default'
 config['keystone_authtoken']['user_domain_name'] = 'Default'
