@@ -14,9 +14,10 @@ conf_nova['database']['connection'] = 'mysql+pymysql://{NOVA_DATABASE_USER}:{NOV
 
 # [DEFAULT]
 conf_nova['DEFAULT']['debug'] = os.environ['OPENSTACK_DEBUG']
-# see also transport_url
 # conf_nova['DEFAULT']['transport_url'] = 'rabbit://{RABBIT_USER}:{RABBIT_PASS}@{RABBIT_HOST}/'.format(**os.environ)\
-conf_nova['DEFAULT']['my_ip'] = os.environ['NOVA_EXTERNAL_HOST']
+conf_nova['DEFAULT']['transport_url'] = 'rabbit://openstack:{RABBIT_PASS}@{HOST_RABBITMQ}:5672/'.format(**os.environ)
+# conf_nova['DEFAULT']['my_ip'] = os.environ['NOVA_EXTERNAL_HOST']
+conf_nova['DEFAULT']['my_ip'] = socket.gethostbyname(os.environ['HOST_NOVA'])
 
 # [api]
 conf_nova['api']['auth_strategy'] = 'keystone'
