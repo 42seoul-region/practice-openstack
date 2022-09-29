@@ -72,6 +72,8 @@ nova-manage cell_v2 map_cell0
 nova-manage cell_v2 create_cell --name=cell1 --verbose
 nova-manage db sync
 nova-manage cell_v2 list_cells
+# see also 'nova-scheduler' and automatic discovery
+nova-manage cell_v2 discover_hosts --verbose
 EOF
 )" nova
 
