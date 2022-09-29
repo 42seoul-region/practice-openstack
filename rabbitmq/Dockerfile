@@ -1,16 +1,16 @@
 FROM rabbitmq:latest
 
-ARG RABBIT_PASS
+ENV RABBIT_PASS=rabbitmq_password
+
+VOLUME "/var/lib/rabbitmq"
 
 # Healthcheck
 HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
-CMD rabbitmq-diagnostics -q ping
+    CMD rabbitmq-diagnostics -q ping
 
-COPY config-rabbitmq.sh config-rabbitmq.sh
-RUN chmod +x config-rabbitmq.sh
-RUN sh ./config-rabbitmq.sh
+COPY docker-entrypoint-custom.sh /usr/local/bin/docker-entrypoint-custom.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint-custom.sh
 
 EXPOSE 4369 5671 5672 15691 15692 25672
 
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["rabbitmq-server"]
+CMD ["docker-entrypoint-custom.sh", "rabbitmq-server"]
