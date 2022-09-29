@@ -31,6 +31,7 @@ RUN apt update && \
     apt install -y software-properties-common && \
     add-apt-repository -y cloud-archive:yoga
 RUN apt install -y --fix-missing \
+                    iproute2 net-tools \
                     neutron-server=2:20.2.0-0ubuntu1~cloud0 \
                     neutron-linuxbridge-agent=2:20.2.0-0ubuntu1~cloud0 \
                     neutron-l3-agent=2:20.2.0-0ubuntu1~cloud0 \

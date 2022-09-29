@@ -15,7 +15,8 @@ configure() {
   ./config-ml2_conf.py
 
   echo "configure linuxbridge_agent.ini..."
-  ./config-linuxbridge_agent.py
+  PROVIDER_INTERFACE_NAME=$(ip -o -4 route show to default | awk '{print $5}') && \
+    ./config-linuxbridge_agent.py
 
   echo "configure l3_agent.ini..."
   ./config-l3_agent.py
@@ -30,7 +31,7 @@ configure() {
   ./config-openstack.sh
 
   su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
-  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+    --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
 
   echo "done!"
   touch /root/.neutron_configured
