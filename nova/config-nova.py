@@ -46,9 +46,10 @@ conf_nova['neutron']['password'] = os.environ['NEUTRON_PASS']
 conf_nova['neutron']['service_metadata_proxy'] = 'true'
 conf_nova['neutron']['metadata_proxy_shared_secret'] = os.environ['METADATA_SECRET']
 
-config['vnc']['enabled'] = 'true'
-config['vnc']['server_listen'] = '$my_ip'
-config['vnc']['server_proxyclient_address'] = '$my_ip'
+# [vnc]
+conf_nova['vnc']['enabled'] = 'true'
+conf_nova['vnc']['server_listen'] = '$my_ip'
+conf_nova['vnc']['server_proxyclient_address'] = '$my_ip'
 
 # [glance]
 conf_nova['glance']['api_servers'] = '{GLANCE_INTERNAL_ENDPOINT}'.format(**os.environ)
