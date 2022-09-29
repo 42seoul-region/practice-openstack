@@ -104,6 +104,7 @@ services:
             keystone:
                 condition: service_healthy
         stop_signal: SIGKILL
+
     neutron:
         build:
             context: ./neutron
@@ -120,13 +121,7 @@ services:
                     - $HOST_NOVA
                 ipv4_address: $NOVA_EXTERNAL_HOST
         depends_on:
-            mariadb:
-                condition: service_healthy
             keystone:
-                condition: service_healthy
-            glance:
-                condition: service_healthy
-            placement-api:
                 condition: service_healthy
             nova:
                 condition: service_healthy
