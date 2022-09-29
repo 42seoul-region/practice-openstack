@@ -17,6 +17,7 @@ services:
         # About max-connection:
         #   By default, all OpenStack components start a set number of workers based on the number of CPUs that a system has. The system calculates the number of workers to start by using the following formula: NUM_CPUs / 2. The system calculates a minimum of 2 workers, and a maximum of 4 workers for each function.
         command: --log-warning=1 --max-connections=512
+
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
@@ -75,6 +76,8 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
         stop_signal: SIGKILL
 
     glance:
@@ -93,6 +96,8 @@ services:
             - ./data/glance/images:/var/lib/glance/images
             # - ./log/glance:/var/log/glance
         depends_on:
+            mariadb:
+                condition: service_healthy
             keystone:
                 condition: service_healthy
         stop_signal: SIGKILL
@@ -144,9 +149,40 @@ services:
                 aliases:
                     - $HOST_NEUTRON
         depends_on:
+            mariadb:
+                condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
             keystone:
                 condition: service_healthy
             nova:
+                condition: service_healthy
+            neutron:
+                condition: service_healthy
+        stop_signal: SIGKILL
+
+    horizon:
+        build:
+            context: ./horizon
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "80:80"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_HORIZON
+        depends_on:
+            keystone:
+                condition: service_healthy
+            glance:
+                condition: service_healthy
+            placement-api:
+                condition: service_healthy
+            nova:
+                condition: service_healthy
+            neutron:
                 condition: service_healthy
         stop_signal: SIGKILL
 

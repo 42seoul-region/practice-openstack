@@ -13,7 +13,7 @@ $ docker compose up --build
 
 ## 2. 기본 설치 위치
 - 기본 `.env` 파일에 설정된 값은 다음과 같습니다.
-  - 관리자 ID는 `admin`, 관리자 패스워드는 `keystone_admin_password`이 초기값입니다.
+  - 관리자 ID는 `keystone`, 관리자 패스워드는 `keystone_admin_password`이 초기값입니다.
   - keystone API는 http://localhost:5000/v3 위치에 설치됩니다.
 
 -----------------------------------------------------------------------------------------------
@@ -26,6 +26,9 @@ $ docker compose up --build
   - nova external ip를 설정하기 위함 (차후 수정 될수도 있음)
 - openstackclient config script 변경
   - role, endpoint에 대한 check 부분을 주로 변경
+- neutron dockerfile 추가
+- horizon dockerfile 추가
+- docker-compose에 memcached image 추가
 
 ### issue
 - docker compose down 후 data를 삭제하지 않고 docker compose up --build를 진행할 시,
