@@ -157,8 +157,6 @@ services:
                 condition: service_healthy
             nova:
                 condition: service_healthy
-            neutron:
-                condition: service_healthy
         stop_signal: SIGKILL
 
     horizon:
