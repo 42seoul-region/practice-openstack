@@ -14,6 +14,16 @@ configure() {
   echo "configure ml2_conf.ini..."
   ./config-ml2_conf.py
 
+  echo "configure l3_agent.ini..."
+  ./config-l3_agent.py
+
+
+  echo "configure dhcp_agent.ini..."
+  ./config-dhcp_agent.py
+
+  echo "configure metadata_agent.ini..."
+  ./config-metadata_agent.py
+
   echo "configure openstack..."
   ./config-openstack.sh
 
@@ -31,18 +41,18 @@ fi
 echo "Starting service..."
 
 neutron-server &
-#neutron-dhcp-agent &
-#neutron-metadata-agent &
-#neutron-l3-agent &
+neutron-dhcp-agent &
+neutron-metadata-agent &
+neutron-l3-agent &
 
 trap "service_down; exit" SIGKILL
 
 function service_down() {
   echo "Terminating services..."
   killall -SIGKILL neutron-server
-#  killall -SIGKILL neutron-dhcp-agent
-#  killall -SIGKILL neutron-metadata-agent
-#  killall -SIGKILL neutron-l3-agent
+  killall -SIGKILL neutron-dhcp-agent
+  killall -SIGKILL neutron-metadata-agent
+  killall -SIGKILL neutron-l3-agent
 }
 
 exec "$@"

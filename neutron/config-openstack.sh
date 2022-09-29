@@ -14,7 +14,7 @@ export OS_PASSWORD=${KEYSTONE_ADMIN_PASS}
 export OS_AUTH_URL=${KEYSTONE_INTERNAL_ENDPOINT}/v3
 export OS_INTERFACE=internal
 
-# Setting up - Nova
+# Setting up - Neutron
 echo "Check Neutron User..."
 openstack user delete ${NEUTRON_USER} || true
 echo "Create Neutron User..."
@@ -29,7 +29,7 @@ fi
 echo "Check Neutron Service..."
 openstack service delete network || true
 echo "Create Neutron Service..."
-openstack service create --name neutron --description "OpenStack Image Service" network
+openstack service create --name neutron --description "OpenStack Network Service" network
 
 echo "Check Neutron Endpoint..."
 if [ $(openstack endpoint list --service network | grep network | wc -l) -eq 0 ];then

@@ -17,7 +17,6 @@ services:
         # About max-connection:
         #   By default, all OpenStack components start a set number of workers based on the number of CPUs that a system has. The system calculates the number of workers to start by using the following formula: NUM_CPUs / 2. The system calculates a minimum of 2 workers, and a maximum of 4 workers for each function.
         command: --log-warning=1 --max-connections=512
-
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
@@ -28,6 +27,36 @@ services:
             os-internal: {}
         depends_on:
             - mariadb
+
+    memcached:
+        image: memcached:latest
+        ports:
+            - "11211:11211"
+        env_file:
+            - .env
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_MEMCACHED
+    rabbitmq:
+        build:
+            context: ./rabbitmq
+            dockerfile: Dockerfile
+            args:
+                - RABBIT_PASS
+        env_file:
+            - .env
+        ports:
+            - "4369:4369"
+            - "5671:5671"
+            - "5672:5672"
+            - "15691:15691"
+            - "15692:15692"
+            - "25672:25672"
+        networks:
+            os-internal:
+                aliases:
+                    - $HOST_RABBITMQ
 
     keystone:
         build:
@@ -47,7 +76,7 @@ services:
             mariadb:
                 condition: service_healthy
         stop_signal: SIGKILL
-        
+
     glance:
         build:
             context: ./glance
@@ -89,8 +118,6 @@ services:
         build:
             context: ./nova
             dockerfile: Dockerfile
-            args:
-                - NOVA_EXTERNAL_HOST
         env_file:
             - .env
         ports:
@@ -99,7 +126,6 @@ services:
             os-internal:
                 aliases:
                     - $HOST_NOVA
-                ipv4_address: $NOVA_EXTERNAL_HOST
         depends_on:
             keystone:
                 condition: service_healthy
@@ -109,8 +135,6 @@ services:
         build:
             context: ./neutron
             dockerfile: Dockerfile
-            args:
-                - NOVA_EXTERNAL_HOST
         env_file:
             - .env
         ports:
@@ -118,8 +142,7 @@ services:
         networks:
             os-internal:
                 aliases:
-                    - $HOST_NOVA
-                ipv4_address: $NOVA_EXTERNAL_HOST
+                    - $HOST_NEUTRON
         depends_on:
             keystone:
                 condition: service_healthy

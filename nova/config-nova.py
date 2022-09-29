@@ -2,6 +2,7 @@
 
 import os
 import configparser
+import socket
 
 conf_nova = configparser.ConfigParser()
 conf_nova.read('/etc/nova/nova.conf')
@@ -23,7 +24,7 @@ conf_nova['api']['auth_strategy'] = 'keystone'
 # [keystone_authtoken]
 conf_nova['keystone_authtoken']['www_authenticate_uri'] = '{KEYSTONE_PUBLIC_ENDPOINT}'.format(**os.environ)
 conf_nova['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}'.format(**os.environ)
-# see also memcached_servers
+conf_nova['keystone_authtoken']['memcached_servers'] = '{HOST_MEMCACHED}:11211'.format(**os.environ)
 conf_nova['keystone_authtoken']['auth_type'] = 'password'
 conf_nova['keystone_authtoken']['project_domain_name'] = 'Default'
 conf_nova['keystone_authtoken']['user_domain_name'] = 'Default'
@@ -44,10 +45,9 @@ conf_nova['neutron']['password'] = os.environ['NEUTRON_PASS']
 conf_nova['neutron']['service_metadata_proxy'] = 'true'
 conf_nova['neutron']['metadata_proxy_shared_secret'] = os.environ['METADATA_SECRET']
 
-# [vnc]
-conf_nova['vnc']['enabled'] = 'true'
-conf_nova['vnc']['server_listen'] = '$my_ip'
-conf_nova['vnc']['server_proxyclient_address'] = '$my_ip'
+config['vnc']['enabled'] = 'true'
+config['vnc']['server_listen'] = '$my_ip'
+config['vnc']['server_proxyclient_address'] = '$my_ip'
 
 # [glance]
 conf_nova['glance']['api_servers'] = '{GLANCE_INTERNAL_ENDPOINT}'.format(**os.environ)

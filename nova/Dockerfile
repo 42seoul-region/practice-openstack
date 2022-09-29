@@ -8,8 +8,6 @@ RUN apt update && \
     add-apt-repository -y cloud-archive:yoga && \
     apt install -y apache2=2.4.41-4ubuntu3.12 python3-pip python3-pymysql
 
-ARG NOVA_EXTERNAL_HOST 
-
 # Install packages (nova-yoga)
 RUN apt install -y nova-api=3:25.0.1-0ubuntu1~cloud0 \
                     nova-scheduler=3:25.0.1-0ubuntu1~cloud0 \
