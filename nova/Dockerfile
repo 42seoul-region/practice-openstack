@@ -8,22 +8,26 @@ RUN apt update && \
     add-apt-repository -y cloud-archive:yoga && \
     apt install -y apache2=2.4.41-4ubuntu3.12 python3-pip python3-pymysql
 
-# Install packages (placement-api-yoga)
-RUN apt install -y placement-api=1:7.0.0-0ubuntu1~cloud0 
+# Install packages (nova-yoga)
+RUN apt install -y nova-api=3:25.0.1-0ubuntu1~cloud0 \
+                    nova-scheduler=3:25.0.1-0ubuntu1~cloud0 \
+                    nova-conductor=3:25.0.1-0ubuntu1~cloud0 \
+                    nova-novncproxy=3:25.0.1-0ubuntu1~cloud0
 
 # Install pip and OpenStack client
 RUN pip install python-openstackclient
 
 # Copy configuration files
-COPY config-placement.py config.py
-COPY entrypoint-placement.sh entrypoint.sh
+COPY config-nova.py config.py
+COPY entrypoint-nova.sh entrypoint.sh
 RUN chmod +x config.py entrypoint.sh
 
-EXPOSE 8778
+EXPOSE 8774
 
 # Healthcheck
 HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
-    CMD wget -O - http://localhost:8778 >/dev/null 2>/dev/null || exit 1
+    CMD wget -O - http://localhost:8774 >/dev/null
 
+# Run entrypoint
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["apache2ctl", "-D", "FOREGROUND"]
