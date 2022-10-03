@@ -14,6 +14,8 @@ CACHES = {
     }
 }
 
+DEBUG = True
+
 OPENSTACK_KEYSTONE_URL = "http://keystone-server:5000/identity/v3"
 
 OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True

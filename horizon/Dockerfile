@@ -22,9 +22,9 @@ ENV GLANCE_INTERNAL_ENDPOINT=http://glance-server:9292
 
 ENV NEUTRON_INTERNAL_ENDPOINT=http://neutron-server:9696
 
-ENV NOVA_PUBLIC_ENDPOINT=http://nova-server:8774
-ENV NOVA_ADMIN_ENDPOINT=http://nova-server:8774
-ENV NOVA_INTERNAL_ENDPOINT=http://nova-server:8774
+ENV NOVA_PUBLIC_ENDPOINT=http://nova-server:8774/v2.1
+ENV NOVA_ADMIN_ENDPOINT=http://nova-server:8774/v2.1
+ENV NOVA_INTERNAL_ENDPOINT=http://nova-server:8774/v2.1
 
 ENV REGION_ID=42region
 
