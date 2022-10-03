@@ -2,32 +2,8 @@ FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV OPENSTACK_ADMIN_PROJECT=admin
-ENV OPENSTACK_ADMIN_ROLE=admin
-ENV OPENSTACK_SERVICE_PROJECT=service
-ENV OPENSTACK_DEBUG=false
-
-ENV KEYSTONE_ADMIN_USER=keystone
-ENV KEYSTONE_ADMIN_PASS=keystone_admin_password
-
-ENV NOVA_USER=nova
-ENV NOVA_PASS=nova_password
-
-ENV KEYSTONE_PUBLIC_ENDPOINT=http://keystone-server:5000
-ENV KEYSTONE_ADMIN_ENDPOINT=http://keystone-server:5000
-ENV KEYSTONE_INTERNAL_ENDPOINT=http://keystone-server:5000
-
-ENV GLANCE_INTERNAL_ENDPOINT=http://glance-server:9292
-
-ENV NEUTRON_INTERNAL_ENDPOINT=http://neutron-server:9696
-
-ENV NOVA_PUBLIC_ENDPOINT=http://nova-server:8774/v2.1
-ENV NOVA_ADMIN_ENDPOINT=http://nova-server:8774/v2.1
-ENV NOVA_INTERNAL_ENDPOINT=http://nova-server:8774/v2.1
-
-ENV REGION_ID=42region
-
-RUN apt update && \
+RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list && \
+    apt update && \
     apt install -y software-properties-common && \
     add-apt-repository -y cloud-archive:yoga
 RUN apt install -y --fix-missing \

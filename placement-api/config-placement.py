@@ -17,7 +17,7 @@ conf_placement['api']['auth_strategy'] = 'keystone'
 
 # [keystone_authtoken]
 conf_placement['keystone_authtoken']['auth_url'] = '{KEYSTONE_INTERNAL_ENDPOINT}/v3/'.format(**os.environ)
-conf_placement['keystone_authtoken']['memcached_servers'] = '{HOST_MEMCACHED}:11211'.format(**os.environ)
+conf_placement['keystone_authtoken']['memcached_servers'] = '{HOST_INTERNAL_MEMCACHED}:11211'.format(**os.environ)
 conf_placement['keystone_authtoken']['auth_type'] = 'password'
 conf_placement['keystone_authtoken']['project_domain_name'] = 'Default'
 conf_placement['keystone_authtoken']['user_domain_name'] = 'Default'

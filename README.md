@@ -1,5 +1,23 @@
 # 42Region Practice - OpenStack
 
+## * 사전 설정
+### (1) VLAN 설정
+- 먼저 내부 통신에 필요한 VLAN을 설정해야 합니다.
+```bash
+$ ./vlan.sh 192.168.42.1/24 192.168.42.255
+```
+- 컨트롤러 노드로 쓸 VLAN IP/CIDR, 브로드캐스트 주소를 인자로 넣어줍니다.
+### (2) 환경 변수 설정
+```
+HOST_VLAN_CONTROLLER=192.168.42.1
+HOST_PUBLIC_CONTROLLER=10.211.55.7
+```
+- `.env` 파일에서 현재 컨트롤러의 VLAN주소 및 공개 주소를 설정합니다.
+  - 공개 주소는 현재 자신의 환경에 맞게 설정해야 합니다.
+- 이 값으로 모든 OpenStack의 EndPoint가 설정되기 때문에, 올바르게 설정되어야 합니다.
+
+---
+
 ## 1. Docker 실행 방법
 - 저장소를 클론합니다.
 - `docker compose up --build` 또는 `docker-compose up --build` 로 서비스를 실행합니다.
