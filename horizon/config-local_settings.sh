@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cat > /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_local_settings.py << EOF
-OPENSTACK_HOST = "horizon-server"
+OPENSTACK_HOST = "$HOST_INTERNAL_KEYSTONE"
 
 ALLOWED_HOSTS = ['*']
 
@@ -10,13 +10,13 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'default': {
          'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-         'LOCATION': 'memcached-server:11211',
+         'LOCATION': '$HOST_INTERNAL_MEMCACHED:11211',
     }
 }
 
 DEBUG = True
 
-OPENSTACK_KEYSTONE_URL = "http://keystone-server:5000/identity/v3"
+OPENSTACK_KEYSTONE_URL = "http://%s:5000/identity/v3" % OPENSTACK_HOST
 
 OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
 

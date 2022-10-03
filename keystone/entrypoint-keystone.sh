@@ -38,7 +38,7 @@ configure() {
 
   # Set host name of HTTP service
   echo "Append \'ServerName\' to apache2.conf . . ."
-  echo "ServerName $HOST_KEYSTONE" >> /etc/apache2/apache2.conf
+  echo "ServerName $HOST_INTERNAL_KEYSTONE" >> /etc/apache2/apache2.conf
 
   echo "Done ! !"
 }

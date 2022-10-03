@@ -3,7 +3,8 @@ FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install packages (Apache2, Python3.9.14-1)
-RUN apt update && \
+RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list && \
+    apt update && \
     apt install -y software-properties-common && \
     add-apt-repository -y cloud-archive:yoga && \
     apt install -y apache2=2.4.41-4ubuntu3.12 python3-pip python3-pymysql

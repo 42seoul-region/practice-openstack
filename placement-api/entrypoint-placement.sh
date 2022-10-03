@@ -66,7 +66,7 @@ configure() {
 
   # Set host name of HTTP service
   echo "Append \'ServerName\' to apache2.conf . . ."
-  echo "ServerName $HOST_PLACEMENT_API" >> /etc/apache2/apache2.conf
+  echo "ServerName $HOST_INTERNAL_PLACEMENT_API" >> /etc/apache2/apache2.conf
 
   echo "Done ! !"
 }
