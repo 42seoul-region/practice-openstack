@@ -180,6 +180,25 @@ services:
                 condition: service_healthy
         stop_signal: SIGKILL
 
+    cinder:
+        build:
+            context: ./cinder
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "8776:8776"
+        networks:
+            os-internal:
+                aliases:
+                  - $HOST_INTERNAL_CINDER
+        depends_on:
+            keystone:
+                condition: service_healthy
+            mariadb:
+                condition: service_healthy
+        stop_signal: SIGKILL
+
 networks:
     os-internal:
         ipam:
