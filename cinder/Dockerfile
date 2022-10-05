@@ -12,12 +12,15 @@ RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list && \
 # Install packages (cinder-yoga)
 RUN apt install -y cinder-api cinder-scheduler
 
+# Install pip and OpenStack client
+RUN pip install python-openstackclient
+
+EXPOSE 8776
+
 # Copy configuration files
 COPY config-cinder-controller.py config.py
 COPY entrypoint-cinder-controller.sh entrypoint.sh
 RUN chmod +x config.py entrypoint.sh
-
-EXPOSE 8776
 
 # Healthcheck
 HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
