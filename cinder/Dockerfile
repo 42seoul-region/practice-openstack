@@ -18,13 +18,13 @@ RUN pip install python-openstackclient
 EXPOSE 8776
 
 # Copy configuration files
-COPY config-cinder-controller.py config.py
-COPY entrypoint-cinder-controller.sh entrypoint.sh
+COPY config-cinder.py config.py
+COPY entrypoint-cinder.sh entrypoint.sh
 RUN chmod +x config.py entrypoint.sh
 
 # Healthcheck
 HEALTHCHECK --interval=3s --timeout=5s --start-period=3s --retries=30 \
-CMD wget -O http://localhost:8776 >/dev/null 2/dev/null || exit 1
+CMD wget -O http://localhost:8776 >/dev/null 2/dev/null
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["apache2ctl", "-D", "FOREGROUND"]
