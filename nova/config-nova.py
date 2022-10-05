@@ -70,5 +70,8 @@ conf_nova['placement']['password'] = os.environ['PLACEMENT_API_PASS']
 # [scheduler]
 conf_nova['scheduler']['discover_hosts_in_cells_interval'] = '10' # default: 300
 
+# [cinder]
+conf_nova['cinder']['os_region_name'] = os.environ['REGION_ID']
+
 with open('/etc/nova/nova.conf', 'w') as f1:
     conf_nova.write(f1)
