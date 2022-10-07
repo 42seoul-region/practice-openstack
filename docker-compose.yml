@@ -13,6 +13,8 @@ services:
             os-internal:
                 aliases:
                     - mariadb
+        ports:
+            - "$HOST_VLAN_CONTROLLER:3306:3306"
         restart: unless-stopped
         # About max-connection:
         #   By default, all OpenStack components start a set number of workers based on the number of CPUs that a system has. The system calculates the number of workers to start by using the following formula: NUM_CPUs / 2. The system calculates a minimum of 2 workers, and a maximum of 4 workers for each function.
@@ -124,6 +126,7 @@ services:
             - .env
         ports:
             - "8774:8774"
+            - "6080:6080"
         networks:
             os-internal:
                 aliases:

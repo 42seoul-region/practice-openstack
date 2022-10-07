@@ -69,8 +69,8 @@ configure() {
   su -s /bin/sh -c "$(cat << EOF
 nova-manage api_db sync
 nova-manage cell_v2 map_cell0
-nova-manage cell_v2 create_cell --name=cell1 --verbose
 nova-manage db sync
+# nova-manage cell_v2 create_cell --name cell1 --database_connection mysql+pymysql://nova_compute:nova_database_password@192.168.42.3/nova_compute?charset=utf8 --transport-url rabbit://guest:guest@192.168.42.3:5672/
 nova-manage cell_v2 list_cells
 # see also 'nova-scheduler' and automatic discovery
 nova-manage cell_v2 discover_hosts --verbose

@@ -25,7 +25,7 @@ configure() {
 
     echo "test"
     rabbitmqctl list_users
-    rabbitmqctl authenticate_user openstack rabbitmq_password
+    rabbitmqctl authenticate_user openstack $RABBIT_PASS
 
     echo "kill temporary server"
     rabbitmqctl shutdown

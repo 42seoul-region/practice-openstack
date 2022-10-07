@@ -1,4 +1,4 @@
-FROM rabbitmq:latest
+FROM rabbitmq:3.10
 
 ENV RABBIT_PASS=rabbitmq_password
 
