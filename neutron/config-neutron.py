@@ -111,5 +111,5 @@ conf_neutron_ml2_conf['ml2_type_vxlan']['vni_ranges'] = '1:1000'
 
 conf_neutron_ml2_conf['securitygroup']['enable_ipset'] = 'true'
 
-with open('/etc/neutron/ml2/ml2_conf.ini', 'w') as f_conf_neutron_ml2_conf:
+with open('/etc/neutron/plugins/ml2/ml2_conf.ini', 'w') as f_conf_neutron_ml2_conf:
     conf_neutron_ml2_conf.write(f_conf_neutron_ml2_conf)

@@ -8,27 +8,10 @@ echo "$@"
 configure() {
   echo "First configurating Nova"
 
+  export PROVIDER_INTERFACE_NAME=$(ip -o -4 route show to default | awk '{print $5}')
+
   echo "configure neutron.conf..."
   ./config-neutron.py
-
-  echo "configure ml2_conf.ini..."
-  ./config-ml2_conf.py
-
-  echo "configure linuxbridge_agent.ini..."
-  export PROVIDER_INTERFACE_NAME=$(ip -o -4 route show to default | awk '{print $5}')
-  ./config-linuxbridge_agent.py
-
-  echo "configure l3_agent.ini..."
-  ./config-l3_agent.py
-
-  echo "configure dhcp_agent.ini..."
-  ./config-dhcp_agent.py
-
-  echo "configure metadata_agent.ini..."
-  ./config-metadata_agent.py
-
-  echo "configure openstack..."
-  ./config-openstack.sh
 
   su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
     --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron

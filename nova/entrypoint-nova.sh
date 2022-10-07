@@ -68,12 +68,17 @@ configure() {
   ## Finally, Show registered nova cells
   su -s /bin/sh -c "$(cat << EOF
 nova-manage api_db sync
-nova-manage cell_v2 map_cell0
+echo map_cell0
+nova-manage cell_v2 map_cell0 --database_connection mysql+pymysql://$NOVA_DATABASE_USER:$NOVA_DATABASE_PASSWORD@$NOVA_DATABASE_HOST:$NOVA_DATABASE_PORT/$NOVA_CELL0_DATABASE_SCHEME?charset=utf8
+echo create cell
+nova-manage cell_v2 create_cell --name cell1 --database_connection mysql+pymysql://nova_compute:nova_database_password@192.168.42.3/nova_compute?charset=utf8 --transport-url rabbit://guest:guest@192.168.42.3:5672/
+# nova-manage cell_v2 map_instances
+echo db sync
 nova-manage db sync
-# nova-manage cell_v2 create_cell --name cell1 --database_connection mysql+pymysql://nova_compute:nova_database_password@192.168.42.3/nova_compute?charset=utf8 --transport-url rabbit://guest:guest@192.168.42.3:5672/
+
 nova-manage cell_v2 list_cells
 # see also 'nova-scheduler' and automatic discovery
-nova-manage cell_v2 discover_hosts --verbose
+# nova-manage cell_v2 discover_hosts --verbose
 EOF
 )" nova
 
