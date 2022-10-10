@@ -34,6 +34,37 @@ $ docker compose up --build
   - 관리자 ID는 `keystone`, 관리자 패스워드는 `keystone_admin_password`이 초기값입니다.
   - keystone API는 http://localhost:5000/v3 위치에 설치됩니다.
 
+### 3. 플로우 차트
+```mermaid
+%%{init: {'theme': 'default'}}%%
+flowchart TB
+  Vdatamariadb{{./data/mariadb}} x-. /var/lib/mysql .-x mariadb
+  Vdataglanceimages{{./data/glance/images}} x-. /var/lib/glance/images .-x glance
+  cinder --> keystone
+  cinder --> mariadb
+  glance --> mariadb
+  glance --> keystone
+  horizon --> keystone
+  horizon --> glance
+  horizon --> placementapi[placement-api]
+  horizon --> nova
+  horizon --> neutron
+  keystone --> mariadb
+  keystone --> rabbitmq
+  neutron --> mariadb
+  neutron --> rabbitmq
+  neutron --> keystone
+  neutron --> nova
+  nova --> keystone
+  phpmyadmin --> mariadb
+  placementapi --> keystone
+
+  memcached
+
+  classDef volumes fill:#fdfae4,stroke:#867a22
+  class Vdatamariadb,Vdataglanceimages volumes
+```
+
 -----------------------------------------------------------------------------------------------
 
 ## nova_create branch
